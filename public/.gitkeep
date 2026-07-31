@@ -1,0 +1,5 @@
+# Drop Google Search Console HTML verification file here, e.g.:
+#   public/googleXXXXXXXXXXXXXXXX.html
+#
+# Or use meta-tag verification via .env.local:
+#   NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_code
