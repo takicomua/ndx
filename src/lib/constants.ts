@@ -19,9 +19,9 @@ export const SITE = {
 
 export const CONTACTS = {
   telegram: env("NEXT_PUBLIC_CONTACT_TELEGRAM", "https://t.me/"),
-  github: env("NEXT_PUBLIC_CONTACT_GITHUB", "https://github.com/"),
+  github: env("NEXT_PUBLIC_CONTACT_GITHUB", "https://github.com/takicomua"),
   linkedin: env("NEXT_PUBLIC_CONTACT_LINKEDIN", "https://linkedin.com/in/"),
-  email: env("NEXT_PUBLIC_CONTACT_EMAIL", "hello@example.com"),
+  email: env("NEXT_PUBLIC_CONTACT_EMAIL", "hello@ndx.com.ua"),
 } as const;
 
 export const NAV = [
