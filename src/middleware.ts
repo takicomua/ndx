@@ -8,8 +8,10 @@ import { CANONICAL_HOST, securityHeaders } from "@/lib/security";
 export function middleware(request: NextRequest) {
   const gscPath = googleVerificationHtmlPath();
   if (gscPath && request.nextUrl.pathname === gscPath) {
-    const token = SEO.googleHtmlVerification.replace(/\.html$/i, "");
-    const body = `google-site-verification: ${token}`;
+    // Google expects: google-site-verification: googleXXXX.html
+    const raw = SEO.googleHtmlVerification.replace(/\.html$/i, "");
+    const fileToken = raw.startsWith("google") ? raw : `google${raw}`;
+    const body = `google-site-verification: ${fileToken}.html`;
     return withSecurity(
       new NextResponse(body, {
         status: 200,
