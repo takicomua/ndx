@@ -6,20 +6,41 @@ function env(key: string, fallback: string) {
 export const SITE = {
   brand: "DIACHENKO",
   mark: "NDX",
+  /** Primary public brand string — metadata, schema, chrome. */
+  brandLine: "NDX · DIACHENKO",
   signature: "ndx",
   domain: "ndx.com.ua",
   url: "https://ndx.com.ua",
   tagline: "від ідеї до запуску",
-  title: "DIACHENKO · NDX — сайти, магазини й системи під ключ",
+  title: "NDX · DIACHENKO — сайти, магазини й системи під ключ",
   description:
-    "Роблю сайти, інтернет-магазини та веб-системи від ідеї до запуску. Україна, Київ / remote. ndx.com.ua",
+    "NDX · DIACHENKO — інженер повного циклу: сайти, інтернет-магазини та веб-системи від ідеї до запуску. Україна, Київ / remote. ndx.com.ua",
   geo: "Київ · remote · Україна",
+  /**
+   * Schema.org disambiguatingDescription (UA).
+   * Separates this personal brand from Nasdaq-100 ticker NDX.
+   */
+  disambiguatingDescription:
+    "Інженер повного циклу (full-cycle web engineer): сайти · магазини · системи. Україна. Персональний бренд NDX · DIACHENKO, сайт ndx.com.ua — не біржовий індекс Nasdaq.",
+  /**
+   * alternateName for Organization / Person / WebSite.
+   * Ukrainian given name is omitted: it is not used on the live site.
+   */
+  alternateNames: [
+    "NDX",
+    "ndx",
+    "DIACHENKO",
+    "Diachenko",
+    "ndx.com.ua",
+    "NDX · DIACHENKO",
+  ],
 } as const;
 
 export const CONTACTS = {
   telegram: env("NEXT_PUBLIC_CONTACT_TELEGRAM", "https://t.me/ndxcom"),
   github: env("NEXT_PUBLIC_CONTACT_GITHUB", "https://github.com/takicomua"),
-  linkedin: env("NEXT_PUBLIC_CONTACT_LINKEDIN", "https://linkedin.com/in/"),
+  linkedin: env("NEXT_PUBLIC_CONTACT_LINKEDIN", ""),
+  dou: env("NEXT_PUBLIC_CONTACT_DOU", ""),
   email: env("NEXT_PUBLIC_CONTACT_EMAIL", "hello@ndx.com.ua"),
 } as const;
 
@@ -100,11 +121,12 @@ export const AUDIENCE = {
 
 export const ABOUT = {
   eyebrow: "Про мене",
-  title: "Хто я",
+  title: "NDX · DIACHENKO",
   lead:
-    "Мене звати DIACHENKO. Працюю як NDX: роблю веб-продукти сам — від задачі до запуску.",
+    "Персональний бренд інженера повного циклу: сайти, інтернет-магазини й веб-системи під ключ. Сайт — ndx.com.ua. Україна, Київ / remote.",
   body: [
-    "Якщо вам потрібен сайт, магазин або внутрішня система — і ви не хочете збирати окремо дизайнера, фронтендера, бекендера й девопса — це мій формат.",
+    "Мене звати DIACHENKO. Працюю сам під брендом NDX: структура, код, дані й деплой — одна відповідальність від брифу до запуску.",
+    "Якщо вам потрібен сайт, магазин або внутрішня система — і ви не хочете збирати окремо дизайнера, фронтендера, бекендера й девопса — це мій формат. NDX — не агенція.",
     "Працюю з бізнесом в Україні й на remote. Беру нові задачі й «завислі» проєкти.",
   ],
   how: [
@@ -120,6 +142,18 @@ export const FAQ = {
   eyebrow: "Питання",
   title: "Часті питання",
   items: [
+    {
+      q: "Що таке NDX?",
+      a: "NDX — персональний бренд інженера повного циклу DIACHENKO. Сайт ndx.com.ua: сайти, інтернет-магазини й веб-системи від ідеї до запуску. Україна, Київ / remote. Це не агенція і не біржовий індекс.",
+    },
+    {
+      q: "Хто такий DIACHENKO / NDX?",
+      a: "DIACHENKO — full-cycle веб-інженер. Працюю під брендом NDX: одна людина веде проєкт від брифу до запуску (структура, код, дані, деплой). Портфоліо й контакти — ndx.com.ua.",
+    },
+    {
+      q: "NDX — це агенція?",
+      a: "Ні. NDX — особистий бренд, не агенція з командою ролей. Якщо потрібен сайт, магазин або система без окремого дизайнера, фронтенда, бекенда й девопса — це мій формат.",
+    },
     {
       q: "Що означає «під ключ»?",
       a: "Я відповідаю за результат від обговорення задачі до запущеного продукту: не лише верстка чи лише бекенд.",

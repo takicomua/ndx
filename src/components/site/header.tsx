@@ -24,9 +24,13 @@ export function SiteHeader({ active }: { active?: NavActive }) {
         <Link
           href="/"
           className="font-display text-xl font-semibold tracking-tight text-[var(--fg)] focus-ring"
+          aria-label={SITE.brandLine}
           onClick={() => setOpen(false)}
         >
           {SITE.mark}
+          <span className="ml-1 hidden font-normal text-[var(--dim)] sm:inline">
+            · {SITE.brand}
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Навігація">

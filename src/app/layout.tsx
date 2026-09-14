@@ -47,13 +47,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
     default: SITE.title,
-    template: `%s | NDX · ${SITE.brand}`,
+    template: `%s | ${SITE.brandLine}`,
   },
   description: SITE.description,
-  applicationName: "NDX",
+  applicationName: SITE.brandLine,
   keywords: [
     "NDX",
     "ndx",
+    "NDX · DIACHENKO",
+    "NDX DIACHENKO",
     "ndx.com.ua",
     "DIACHENKO",
     "розробка сайтів",
@@ -70,9 +72,9 @@ export const metadata: Metadata = {
     "Next.js",
     "React",
   ],
-  authors: [{ name: SITE.brand, url: SITE.url }],
-  creator: SITE.brand,
-  publisher: "NDX",
+  authors: [{ name: SITE.brandLine, url: SITE.url }],
+  creator: SITE.brandLine,
+  publisher: SITE.brandLine,
   category: "technology",
   formatDetection: {
     email: false,
@@ -104,7 +106,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "uk_UA",
     url: SITE.url,
-    siteName: "NDX",
+    siteName: SITE.brandLine,
     images: [
       {
         url: "/opengraph-image",

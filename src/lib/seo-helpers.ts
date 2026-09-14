@@ -1,20 +1,29 @@
 import { CONTACTS, SITE } from "@/lib/constants";
 
 function isPlaceholderContact(value: string) {
-  return (
-    !value ||
-    value === "hello@example.com" ||
-    value.endsWith("t.me/") ||
-    value.endsWith("github.com/") ||
-    value.endsWith("linkedin.com/in/") ||
-    value.includes("example.com")
-  );
+  if (!value) return true;
+  const v = value.trim();
+  if (!v || v.includes("example.com")) return true;
+  if (v === "hello@example.com") return true;
+  if (v.endsWith("t.me/") || v.endsWith("github.com/")) return true;
+  if (v.endsWith("linkedin.com/in/") || v.endsWith("linkedin.com/in")) return true;
+  if (v.endsWith("dou.ua/") || v.endsWith("dou.ua/users/")) return true;
+  try {
+    const u = new URL(v);
+    if (u.protocol !== "https:" && u.protocol !== "http:") return true;
+  } catch {
+    return true;
+  }
+  return false;
 }
 
 export function getSameAs(): string[] {
-  return [CONTACTS.telegram, CONTACTS.github, CONTACTS.linkedin].filter(
-    (u) => !isPlaceholderContact(u),
-  );
+  return [
+    CONTACTS.telegram,
+    CONTACTS.github,
+    CONTACTS.linkedin,
+    CONTACTS.dou,
+  ].filter((u) => !isPlaceholderContact(u));
 }
 
 export function getPublicEmail(): string | undefined {

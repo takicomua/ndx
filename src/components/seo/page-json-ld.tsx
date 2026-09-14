@@ -62,7 +62,7 @@ export function PageJsonLd({
       url,
       provider: {
         "@type": "Person",
-        name: SITE.brand,
+        name: SITE.brandLine,
         url: SITE.url,
         ...(email ? { email } : {}),
         ...(sameAs.length ? { sameAs } : {}),
@@ -96,7 +96,7 @@ export function PageJsonLd({
       ...(datePublished
         ? { datePublished, dateModified: datePublished }
         : {}),
-      author: { "@type": "Person", name: SITE.brand, url: SITE.url },
+      author: { "@type": "Person", name: SITE.brandLine, url: SITE.url },
       publisher: { "@id": `${SITE.url}/#organization` },
       mainEntityOfPage: { "@id": `${url}#webpage` },
     });

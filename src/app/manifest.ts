@@ -3,7 +3,7 @@ import { SITE } from "@/lib/constants";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `NDX · ${SITE.brand}`,
+    name: SITE.brandLine,
     short_name: "NDX",
     description: SITE.description,
     start_url: "/",

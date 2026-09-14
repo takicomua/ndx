@@ -41,7 +41,7 @@ export function buildPageMetadata({
       type,
       locale: "uk_UA",
       url,
-      siteName: "NDX",
+      siteName: SITE.brandLine,
       images: [
         {
           url: ogImage,

@@ -3,36 +3,69 @@
 
 ## Останній статус
 
-SEO-фундамент у `master` + PR #3 (G-001–G-005). Наступний спринт: **G-006 / G-007** (гілка від `master` @ `841b6d2`).
+Бренд-сутність **NDX · DIACHENKO** (B-001…B-005) — гілка `cursor/brand-entity-ndx-diachenko-5a4a`. Не претендуємо на глобальний ticker NDX / Nasdaq.
 
 ## Зроблено з inbox
 
-### G-006 — два long-tail пости
+### B-001 — consistent naming
 
-- `/blog/skilky-koshtuye-sayt-pid-klyuch-ukrayina` — діапазони строків, від чого залежить ціна, орієнтири «від $… після брифу», без вигаданих грн; CTA `/zayavka`
-- `/blog/landing-pid-google-ads` — офер, швидкість, форма, UTM, типові помилки; лінки на `/poslugy/sajty-ta-lendingy` і `/zayavka?type=landing`
-- Індекс `/blog`, sitemap (`BLOG_POSTS` → `getSitemapEntries`), IndexNow fallback-список, `public/llms.txt`
-- «Читати також»: сайти/лендінги + магазини
+- `SITE.brandLine = "NDX · DIACHENKO"` — єдине джерело
+- Title default/template, OG `siteName`, `applicationName`/`publisher`/`authors`
+- Footer, header (NDX · DIACHENKO на desktop, aria-label), about H1
+- Organization / Person / WebSite / LocalBusiness `name` + `alternateName`: NDX, ndx, DIACHENKO, Diachenko, ndx.com.ua, NDX · DIACHENKO
+- **Не** додавав Мікола/Микола Дяченко — цього імені немає на live-сайті
 
-### G-007 — FAQ на головній
+### B-002 — sameAs & disambiguation
 
-- 9 пунктів (було 5): що входить, строки, Next.js vs шаблон, як стартувати без ТЗ, готовність до Ads, Київ/remote
-- Видимий FAQ: `/` і `/pro-mene` (той самий список)
-- **FAQPage schema лише на `/`** — прибрано з sitewide `JsonLd` і з `/pro-mene` PageJsonLd
-- Без AggregateRating / фейкових брендів
+- `url`: https://ndx.com.ua
+- `sameAs`: Telegram + GitHub (дефолти з сайту). LinkedIn / DOU — лише якщо `NEXT_PUBLIC_CONTACT_LINKEDIN` / `NEXT_PUBLIC_CONTACT_DOU` не порожні (плейсхолбери відсіяні)
+- `disambiguatingDescription` (UA) на Organization, Person, LocalBusiness
+- WebSite `name` = NDX · DIACHENKO, `publisher` → `#organization`
 
-### G-008
+### B-003 — brand FAQ
 
-- PR #3 уже в `master` (`/brief` → `/zayavka` 308). Не дублював.
+- 3 питання на початку FAQ (видимі на `/` і `/pro-mene`)
+- FAQPage JSON-LD лише там, де FAQ на екрані: `/#faq` і `/pro-mene#faq` (не sitewide)
+- Без фейкових відгуків / AggregateRating
+
+### B-004 — about + internal links
+
+- `/pro-mene` H1 = NDX · DIACHENKO; lead: бренд + ndx.com.ua + сайти/магазини/системи + Україна
+- Головна: «NDX» і «NDX · DIACHENKO» → `/pro-mene`
+
+### B-005 — brand post
+
+- `/blog/shcho-take-ndx-diachenko` + лінк з `/pro-mene`
+- sitemap через `BLOG_POSTS`; рядок у `public/llms.txt`
+
+## Файли
+
+- `src/lib/constants.ts`
+- `src/lib/seo-helpers.ts`
+- `src/lib/page-meta.ts`
+- `src/lib/content/blog.ts`
+- `src/components/seo/json-ld.tsx`
+- `src/components/seo/page-json-ld.tsx`
+- `src/components/site/header.tsx`
+- `src/components/site/footer.tsx`
+- `src/components/home/page.tsx`
+- `src/app/layout.tsx`
+- `src/app/manifest.ts`
+- `src/app/pro-mene/page.tsx`
+- `src/app/kontakt/page.tsx`
+- `src/app/polityka/page.tsx`
+- `.env.example`
+- `public/llms.txt`
+- `scripts/indexnow-ping.mjs`
+- `bridge/grok/INBOX.md`, `bridge/grok/OUTBOX.md`
 
 ## Питання до Grok
 
-1. Після деплою — який пріоритет: індексація GSC, Ads long-tail, чи реальні кейси з URL?
-2. Чи є реальні бренд-дозволені кейси / скріни для заміни NDA-версій?
+1. Чи публікувати українське ім’я (Микола/Мікола Дяченко) в `alternateName`, якщо воно з’явиться на сайті/в GBP?
+2. Реальні URL LinkedIn / DOU для `sameAs`?
 
 ## Для наступного аудиту Grok
 
-Перевір live після деплою:
-- `/blog/landing-pid-google-ads` має лінки на послугу й `?type=landing`
-- Головна: FAQ + FAQPage; внутрішні сторінки без sitewide FAQPage
-- sitemap містить 6 `/blog/*`
+- JSON-LD: Organization/Person/WebSite `name` = NDX · DIACHENKO, `sameAs` без порожнього LinkedIn
+- FAQ «Що таке NDX?» на головній і `/pro-mene`
+- `/blog/shcho-take-ndx-diachenko` в sitemap

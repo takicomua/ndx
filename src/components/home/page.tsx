@@ -14,7 +14,14 @@ export function HomePage() {
       <section className="border-b border-[var(--line)] bg-[var(--ink)] text-[var(--ink-fg)]">
         <div className="mx-auto max-w-3xl px-5 py-24 sm:px-8 sm:py-32">
           <p className="text-sm text-[var(--ink-dim)]">
-            {SITE.mark} · {SITE.geo}
+            <Link
+              href="/pro-mene"
+              className="underline decoration-[var(--ink-line)] underline-offset-4 hover:text-[var(--ink-fg)] focus-ring"
+            >
+              {SITE.mark}
+            </Link>
+            {" · "}
+            {SITE.geo}
           </p>
           <h1 className="mt-6 font-display text-[clamp(2.75rem,9vw,5rem)] font-semibold leading-[1.05] tracking-tight">
             {SITE.brand}
@@ -24,6 +31,16 @@ export function HomePage() {
           </p>
           <p className="mt-4 max-w-xl text-[17px] leading-relaxed text-[var(--ink-dim)]">
             {HERO.pitch}
+          </p>
+          <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-[var(--ink-dim)]">
+            <Link
+              href="/pro-mene"
+              className="underline decoration-[var(--ink-line)] underline-offset-4 hover:text-[var(--ink-fg)] focus-ring"
+            >
+              {SITE.brandLine}
+            </Link>
+            {" — персональний бренд full-cycle інженера. Сайти, магазини й системи на "}
+            {SITE.domain}.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href="/zayavka" className="btn-primary focus-ring">

@@ -41,7 +41,7 @@ export default function ContactPage() {
 
         <div className="mt-8 border-y border-[var(--line)] py-6 text-[16px] leading-relaxed">
           <p className="font-semibold text-[var(--fg)]">
-            {SITE.mark} · {SITE.brand}
+            {SITE.brandLine}
           </p>
           <p className="mt-2 text-[var(--dim)]">{CONTACT.place}</p>
           <p className="mt-1 text-[var(--dim)]">

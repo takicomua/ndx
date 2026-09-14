@@ -22,6 +22,36 @@
   - Done when: `/brief` 308 лишається з master
   - Пріоритет: P2
 
+- [x] **B-001** Consistent brand naming in metadata & visible chrome
+  - Що зробити: primary brand `NDX · DIACHENKO` у layout titles/templates, Organization/Person/WebSite `name`/`alternateName`, footer, about
+  - Файли / шляхи: `src/lib/constants.ts`, `src/app/layout.tsx`, `src/lib/page-meta.ts`, `src/components/seo/json-ld.tsx`, footer, `/pro-mene`
+  - Done when: однакова brand line у chrome + schema
+  - Пріоритет: P0
+
+- [x] **B-002** Entity sameAs & disambiguation
+  - Що зробити: `url` ndx.com.ua; `sameAs` Telegram/GitHub; LinkedIn/DOU лише з env; `disambiguatingDescription` UA; WebSite publisher → Organization
+  - Файли / шляхи: `src/components/seo/json-ld.tsx`, `src/lib/seo-helpers.ts`, `.env.example`
+  - Done when: schema без вигаданих профілів, з disambiguation vs Nasdaq
+  - Пріоритет: P0
+
+- [x] **B-003** Brand FAQ / about block
+  - Що зробити: 3 Q — «Що таке NDX?», «Хто такий DIACHENKO / NDX?», «NDX — це агенція?»; FAQPage лише де FAQ видимий
+  - Файли / шляхи: `src/lib/constants.ts`, home + `/pro-mene`
+  - Done when: відповіді без фейкових claim, schema на `/` і `/pro-mene`
+  - Пріоритет: P1
+
+- [x] **B-004** Brand landing reinforcement
+  - Що зробити: посилити `/pro-mene` H1/lead (бренд + домен + послуги); внутрішні лінки NDX з головної на `/pro-mene`
+  - Файли / шляхи: `src/app/pro-mene/page.tsx`, `src/components/home/page.tsx`
+  - Done when: перший екран about явний; NDX на home веде на about
+  - Пріоритет: P1
+
+- [x] **B-005** Optional brand blog post
+  - Що зробити: `/blog/shcho-take-ndx-diachenko` + лінк з `/pro-mene`
+  - Файли / шляхи: `src/lib/content/blog.ts`, `src/app/pro-mene/page.tsx`, `public/llms.txt`
+  - Done when: пост у блозі, sitemap підхоплює через BLOG_POSTS
+  - Пріоритет: P2
+
 ## Нотатки для Cursor
 
 - Репо: ndx.com.ua (Next.js), робоча гілка зазвичай `master`.

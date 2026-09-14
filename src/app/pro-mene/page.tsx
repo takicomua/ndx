@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageJsonLd } from "@/components/seo/page-json-ld";
+import { FaqPageJsonLd, PageJsonLd } from "@/components/seo/page-json-ld";
 import { FaqBlock } from "@/components/site/faq-block";
 import { SiteChrome } from "@/components/site/chrome";
-import { ABOUT, SITE } from "@/lib/constants";
+import { ABOUT, FAQ, SITE } from "@/lib/constants";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Про мене — DIACHENKO · NDX",
+  title: `Про мене — ${SITE.brandLine}`,
   description: ABOUT.lead,
   path: "/pro-mene",
 });
@@ -17,17 +17,19 @@ export default function AboutPage() {
     <SiteChrome active="pro-mene">
       <PageJsonLd
         type="AboutPage"
-        name="Про мене — NDX"
+        name={`Про мене — ${SITE.brandLine}`}
         description={ABOUT.lead}
         path="/pro-mene"
         breadcrumbs={[
-          { name: "NDX", path: "/" },
+          { name: SITE.brandLine, path: "/" },
           { name: "Про мене", path: "/pro-mene" },
         ]}
       />
+      <FaqPageJsonLd items={FAQ.items} id={`${SITE.url}/pro-mene#faq`} />
 
       <article className="mx-auto max-w-3xl py-16 sm:py-20">
-        <h1 className="font-display text-4xl font-semibold tracking-tight">
+        <p className="text-sm font-medium text-[var(--accent)]">{ABOUT.eyebrow}</p>
+        <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight">
           {ABOUT.title}
         </h1>
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
@@ -38,7 +40,19 @@ export default function AboutPage() {
             <p key={p}>{p}</p>
           ))}
         </div>
-        <p className="mt-6 text-sm text-[var(--fg)]">{SITE.geo}</p>
+        <p className="mt-6 text-sm text-[var(--fg)]">
+          {SITE.geo} · {SITE.domain}
+        </p>
+        <p className="mt-4 text-[16px] leading-relaxed text-[var(--dim)]">
+          Докладніше про назву бренду — у статті{" "}
+          <Link
+            href="/blog/shcho-take-ndx-diachenko"
+            className="font-semibold text-[var(--accent)] focus-ring"
+          >
+            «Що таке NDX · DIACHENKO»
+          </Link>
+          .
+        </p>
 
         <h2 className="mt-16 font-display text-2xl font-semibold tracking-tight">
           Як працюю

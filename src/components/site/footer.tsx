@@ -8,8 +8,10 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="mx-auto grid max-w-5xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-3">
         <div>
-          <p className="font-display text-2xl font-semibold">{SITE.mark}</p>
-          <p className="mt-2 text-sm text-[var(--ink-dim)]">{SITE.tagline}</p>
+          <p className="font-display text-2xl font-semibold">{SITE.brandLine}</p>
+          <p className="mt-2 text-sm text-[var(--ink-dim)]">
+            {SITE.domain} · {SITE.tagline}
+          </p>
           <p className="mt-4 text-sm text-[var(--ink-dim)]">{SITE.geo}</p>
         </div>
         <div>
@@ -55,7 +57,7 @@ export function SiteFooter() {
       <div className="border-t border-[var(--ink-line)]">
         <div className="mx-auto flex max-w-5xl flex-col gap-2 px-5 py-5 text-sm text-[var(--ink-dim)] sm:flex-row sm:justify-between sm:px-8">
           <span>
-            © {year} {SITE.brand}
+            © {year} {SITE.brandLine}
           </span>
           <Link href="/polityka" className="focus-ring">
             Політика конфіденційності

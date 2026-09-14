@@ -37,7 +37,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-semibold text-[var(--fg)]">Хто відповідає</h2>
             <p className="mt-2">
-              Сайт {SITE.domain} (NDX · {SITE.brand}). Питання:{" "}
+              Сайт {SITE.domain} ({SITE.brandLine}). Питання:{" "}
               <a href={`mailto:${CONTACTS.email}`} className="text-[var(--accent)]">
                 {CONTACTS.email}
               </a>
