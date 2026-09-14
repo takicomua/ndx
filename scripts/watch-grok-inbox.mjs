@@ -2,9 +2,11 @@
  * Watch bridge/grok/INBOX.md and emit a wake line when new open tasks appear.
  * Usage: node scripts/watch-grok-inbox.mjs
  */
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const INBOX = path.join(ROOT, "bridge", "grok", "INBOX.md");
 const STATE = path.join(ROOT, "bridge", "grok", ".watch-state.json");
@@ -58,7 +60,6 @@ function tick() {
     sample: tasks.slice(0, 5),
   };
 
-  // Wake line for Cursor agent monitored shell /loop
   console.log(`AGENT_LOOP_TICK_grok_inbox ${JSON.stringify(payload)}`);
 }
 
