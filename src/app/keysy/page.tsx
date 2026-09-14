@@ -6,16 +6,10 @@ import { SITE } from "@/lib/constants";
 import { CASE_PAGES } from "@/lib/content/cases";
 
 export const metadata: Metadata = {
-  title: "Підходи та кейси",
+  title: "Роботи",
   description:
-    "Як NDX збирає лендінги, магазини MVP і стабілізує проєкти до Live. Підходи повного циклу · Україна.",
+    "Приклади задач NDX: лендінги, магазини, кабінети, ремонт проєктів. Україна.",
   alternates: { canonical: `${SITE.url}/keysy` },
-  openGraph: {
-    title: `Підходи та кейси | NDX · ${SITE.brand}`,
-    description:
-      "Практичні контури: лендінг під рекламу, магазин MVP, стабілізація проєкту.",
-    url: `${SITE.url}/keysy`,
-  },
 };
 
 export default function CasesIndexPage() {
@@ -23,54 +17,49 @@ export default function CasesIndexPage() {
     <SiteChrome active="keysy">
       <PageJsonLd
         type="CollectionPage"
-        name="Підходи та кейси NDX"
-        description="Практичні контури роботи: лендінги, магазини MVP, стабілізація."
+        name="Роботи NDX"
+        description="Приклади задач: сайти, магазини, кабінети, ремонт."
         path="/keysy"
         breadcrumbs={[
           { name: "NDX", path: "/" },
-          { name: "Кейси", path: "/keysy" },
+          { name: "Роботи", path: "/keysy" },
         ]}
       />
 
-      <section className="border-b border-[var(--line)] py-16 sm:py-20">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--dim)]">
-          KEYS
-        </p>
-        <h1 className="mt-4 font-display text-[clamp(1.9rem,5vw,3rem)] font-medium tracking-tight text-[var(--fg)]">
-          Підходи до типових задач
+      <section className="mx-auto max-w-3xl py-16 sm:py-20">
+        <h1 className="font-display text-4xl font-semibold tracking-tight">
+          Роботи
         </h1>
-        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[var(--dim)]">
-          Не портфоліо-галерея, а робочі контури: як входжу в задачу й що
-          отримуєте на виході.
+        <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
+          Приклади типових задач. Не портфоліо з логотипами — зрозумілі сценарії
+          роботи.
         </p>
-      </section>
 
-      <ul className="py-6">
-        {CASE_PAGES.map((item) => (
-          <li
-            key={item.slug}
-            className="border-t border-[var(--line)] py-8 last:border-b"
-          >
-            <h2 className="font-display text-xl font-medium tracking-tight text-[var(--fg)] sm:text-2xl">
-              <Link
-                href={`/keysy/${item.slug}`}
-                className="transition-colors hover:text-[var(--accent)] focus-ring"
-              >
-                {item.h1}
+        <ul className="list-plain mt-12">
+          {CASE_PAGES.map((item) => (
+            <li key={item.slug} className="py-6">
+              <Link href={`/keysy/${item.slug}`} className="group block focus-ring">
+                <p className="text-sm text-[var(--dim)]">{item.type}</p>
+                <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight group-hover:text-[var(--accent)]">
+                  {item.h1}
+                </h2>
+                <p className="mt-2 text-[16px] leading-relaxed text-[var(--dim)]">
+                  {item.lead}
+                </p>
+                <span className="mt-3 inline-block text-sm font-semibold text-[var(--accent)]">
+                  Читати →
+                </span>
               </Link>
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--dim)]">
-              {item.lead}
-            </p>
-            <Link
-              href={`/keysy/${item.slug}`}
-              className="mt-4 inline-block font-mono text-[10px] tracking-[0.14em] text-[var(--fg)]/40 transition-colors hover:text-[var(--accent)] focus-ring"
-            >
-              Читати →
-            </Link>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-10">
+          <Link href="/zayavka" className="btn-primary focus-ring">
+            Обговорити задачу
+          </Link>
+        </div>
+      </section>
     </SiteChrome>
   );
 }

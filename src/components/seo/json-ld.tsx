@@ -134,7 +134,7 @@ export function JsonLd() {
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE.url}/#faq`,
+        "@id": `${SITE.url}/pro-mene#faq`,
         mainEntity: FAQ.items.map((item) => ({
           "@type": "Question",
           name: item.q,

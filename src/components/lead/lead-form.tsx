@@ -1,40 +1,10 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
 import { CONTACTS } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
-import { cn } from "@/lib/utils";
 
 type Status = "idle" | "loading" | "ok" | "err";
-
-function Chip({
-  active,
-  onClick,
-  children,
-  solid,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: ReactNode;
-  solid?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "h-9 border px-3.5 font-mono text-[11px] tracking-wide transition-colors focus-ring",
-        active
-          ? solid
-            ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-fg)]"
-            : "border-[var(--accent)] text-[var(--accent)]"
-          : "border-[var(--line)] text-[var(--dim)] hover:border-[var(--fg)]/25 hover:text-[var(--fg)]",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
 
 export function LeadForm() {
   const [type, setType] = useState<string>(LEAD.types[0].id);
@@ -82,29 +52,29 @@ export function LeadForm() {
 
   if (status === "ok") {
     return (
-      <div className="flex h-full flex-col justify-center px-1 py-4 sm:px-2">
-        <p className="font-mono text-[10px] tracking-[0.2em] text-[#7dcea0]">
-          OK
+      <div className="flex h-full flex-col justify-center py-2">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]">
+          Готово
         </p>
-        <h3 className="mt-4 font-display text-2xl font-medium text-[var(--fg)]">
+        <h3 className="mt-3 font-display text-2xl font-medium text-[var(--fg)]">
           {LEAD.successTitle}
         </h3>
-        <p className="mt-3 max-w-sm text-sm leading-relaxed text-[var(--dim)]">
+        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[var(--dim)]">
           {LEAD.successText}
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-5">
+        <div className="mt-8 flex flex-wrap items-center gap-4">
           <a
             href={CONTACTS.telegram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center bg-[var(--accent)] px-5 text-sm font-medium text-[var(--accent-fg)] focus-ring"
+            className="btn-primary h-11 px-5 focus-ring"
           >
             Telegram
           </a>
           <button
             type="button"
             onClick={() => setStatus("idle")}
-            className="font-mono text-[11px] tracking-wide text-[var(--dim)] transition-colors hover:text-[var(--accent)] focus-ring"
+            className="text-sm text-[var(--dim)] transition-colors hover:text-[var(--fg)] focus-ring"
           >
             Ще одна заявка
           </button>
@@ -114,24 +84,29 @@ export function LeadForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8" noValidate>
-      <fieldset>
-        <legend className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-          ТИП ЗАДАЧІ
-        </legend>
-        <div className="mt-3 flex flex-wrap gap-2">
+    <form onSubmit={onSubmit} className="space-y-6" noValidate>
+      <label className="block">
+        <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          Тип задачі
+        </span>
+        <select
+          className="field select-field mt-2"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          aria-label="Тип задачі"
+        >
           {LEAD.types.map((t) => (
-            <Chip key={t.id} active={type === t.id} solid onClick={() => setType(t.id)}>
+            <option key={t.id} value={t.id}>
               {t.label}
-            </Chip>
+            </option>
           ))}
-        </div>
-      </fieldset>
+        </select>
+      </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block">
-          <span className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-            ІМ’Я
+          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+            Ім’я
           </span>
           <input
             name="name"
@@ -144,8 +119,8 @@ export function LeadForm() {
           />
         </label>
         <label className="block">
-          <span className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-            КОНТАКТ
+          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+            Контакт
           </span>
           <input
             name="contact"
@@ -158,44 +133,46 @@ export function LeadForm() {
         </label>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <fieldset>
-          <legend className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-            БЮДЖЕТ
-          </legend>
-          <div className="mt-3 flex flex-wrap gap-2">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <label className="block">
+          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+            Бюджет
+          </span>
+          <select
+            className="field select-field mt-2"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+            aria-label="Бюджет"
+          >
             {LEAD.budgets.map((b) => (
-              <Chip
-                key={b.id}
-                active={budget === b.id}
-                onClick={() => setBudget(b.id)}
-              >
+              <option key={b.id} value={b.id}>
                 {b.label}
-              </Chip>
+              </option>
             ))}
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-            СТРОКИ
-          </legend>
-          <div className="mt-3 flex flex-wrap gap-2">
+          </select>
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+            Строки
+          </span>
+          <select
+            className="field select-field mt-2"
+            value={timeline}
+            onChange={(e) => setTimeline(e.target.value)}
+            aria-label="Строки"
+          >
             {LEAD.timelines.map((t) => (
-              <Chip
-                key={t.id}
-                active={timeline === t.id}
-                onClick={() => setTimeline(t.id)}
-              >
+              <option key={t.id} value={t.id}>
                 {t.label}
-              </Chip>
+              </option>
             ))}
-          </div>
-        </fieldset>
+          </select>
+        </label>
       </div>
 
       <label className="block">
-        <span className="font-mono text-[10px] tracking-[0.18em] text-[var(--dim)]">
-          ЗАДАЧА
+        <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          Задача
         </span>
         <textarea
           name="message"
@@ -216,7 +193,7 @@ export function LeadForm() {
       />
 
       {error ? (
-        <p className="font-mono text-[12px] text-[#e07a7a]" role="alert">
+        <p className="text-sm text-[#b42318]" role="alert">
           {error}{" "}
           <a
             href={CONTACTS.telegram}
@@ -229,15 +206,15 @@ export function LeadForm() {
         </p>
       ) : null}
 
-      <div className="flex flex-col gap-4 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex h-12 items-center justify-center bg-[var(--accent)] px-7 text-sm font-medium text-[var(--accent-fg)] transition-[filter,opacity] hover:brightness-110 disabled:opacity-60 focus-ring"
+          className="btn-primary disabled:opacity-60 focus-ring"
         >
           {status === "loading" ? "Надсилаю…" : "Отримати прорахунок"}
         </button>
-        <p className="font-mono text-[10px] leading-relaxed tracking-wide text-[var(--fg)]/30 sm:max-w-[14rem] sm:text-right">
+        <p className="text-sm text-[var(--dim)] sm:max-w-[14rem] sm:text-right">
           Без спаму. Лише відповідь по задачі.
         </p>
       </div>

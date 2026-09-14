@@ -54,7 +54,9 @@ function isValidContact(value: string) {
 
 async function sendTelegram(text: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
-  const chat = process.env.TELEGRAM_CHAT_ID?.trim();
+  const chat =
+    process.env.TELEGRAM_CHAT_ID?.trim() ||
+    process.env.TELEGRAM_CHAT_USERNAME?.trim();
   if (!token || !chat) return { ok: false as const, reason: "telegram_unset" };
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -63,6 +65,7 @@ async function sendTelegram(text: string) {
     body: JSON.stringify({
       chat_id: chat,
       text,
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     }),
   });
@@ -143,7 +146,28 @@ export async function POST(request: Request) {
   const budget = labelOf(LEAD.budgets, body.budget);
   const timeline = labelOf(LEAD.timelines, body.timeline);
 
+  const esc = (s: string) =>
+    s
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+
   const text = [
+    `<b>Нова заявка · ${esc(SITE.domain)}</b>`,
+    ``,
+    `<b>Ім’я:</b> ${esc(name)}`,
+    `<b>Контакт:</b> ${esc(contact)}`,
+    `<b>Тип:</b> ${esc(type)}`,
+    `<b>Бюджет:</b> ${esc(budget)}`,
+    `<b>Строки:</b> ${esc(timeline)}`,
+    message
+      ? `<b>Задача:</b>\n${esc(message)}`
+      : `<b>Задача:</b> —`,
+    ``,
+    `<i>${esc(new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" }))}</i>`,
+  ].join("\n");
+
+  const plainText = [
     `NDX lead · ${SITE.domain}`,
     ``,
     `Ім’я: ${name}`,
@@ -158,7 +182,7 @@ export async function POST(request: Request) {
   ].join("\n");
 
   const tg = await sendTelegram(text);
-  const mail = await sendResend(`[NDX] Заявка — ${name} · ${type}`, text);
+  const mail = await sendResend(`[NDX] Заявка — ${name} · ${type}`, plainText);
 
   if (!tg.ok && !mail.ok) {
     // Soft success path: accept lead client-side still shows success,

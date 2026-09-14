@@ -11,7 +11,7 @@ export function PageJsonLd({
   breadcrumbs,
   faq,
 }: {
-  type: "Service" | "Article" | "CollectionPage";
+  type: "Service" | "Article" | "CollectionPage" | "WebPage" | "AboutPage" | "ContactPage";
   name: string;
   description: string;
   path: string;
@@ -33,7 +33,7 @@ export function PageJsonLd({
       })),
     },
     {
-      "@type": "WebPage",
+      "@type": type === "Article" || type === "Service" ? "WebPage" : type,
       "@id": `${url}#webpage`,
       url,
       name,

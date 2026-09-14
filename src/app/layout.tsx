@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geologica, JetBrains_Mono, Onest } from "next/font/google";
+import { IBM_Plex_Mono, Literata, Source_Sans_3 } from "next/font/google";
 import { GoogleTags, GtmNoscript } from "@/components/seo/google-tags";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SITE } from "@/lib/constants";
@@ -7,19 +7,19 @@ import { SEO } from "@/lib/seo";
 import { shouldNoIndex } from "@/lib/security";
 import "./globals.css";
 
-const display = Geologica({
+const display = Literata({
   variable: "--font-display",
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
   weight: ["400", "500", "600", "700"],
 });
 
-const body = Onest({
+const body = Source_Sans_3({
   variable: "--font-body",
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["400", "500", "600"],
+  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   variable: "--font-mono",
   subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["400", "500"],
@@ -145,11 +145,11 @@ export default function RootLayout({
       lang="uk"
       suppressHydrationWarning
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
-      style={{ backgroundColor: "#000", colorScheme: "dark" }}
+      style={{ backgroundColor: "#f6f6f4", colorScheme: "light" }}
     >
       <body
-        className="min-h-full bg-black font-sans text-[var(--fg)]"
-        style={{ backgroundColor: "#000", color: "#f2f2f2" }}
+        className="min-h-full bg-[var(--bg)] font-sans text-[var(--fg)]"
+        style={{ backgroundColor: "#f6f6f4", color: "#121212" }}
       >
         <GtmNoscript />
         <JsonLd />

@@ -31,6 +31,10 @@ export function getSitemapEntries(): SitemapEntry[] {
       priority: 0.75,
       changeFrequency: "monthly" as const,
     })),
+    { path: "/pro-mene", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/zayavka", priority: 0.85, changeFrequency: "monthly" },
+    { path: "/kontakt", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/polityka", priority: 0.3, changeFrequency: "yearly" },
   ];
 }
 
