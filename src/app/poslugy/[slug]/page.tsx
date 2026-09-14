@@ -3,9 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
+import { getPostBySlug } from "@/lib/content/blog";
 import { getCaseBySlug } from "@/lib/content/cases";
 import { getServiceBySlug, SERVICE_PAGES } from "@/lib/content/services";
 import { buildPageMetadata } from "@/lib/page-meta";
+import { zayavkaHref } from "@/lib/utm";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -32,6 +34,10 @@ export default async function ServicePage({ params }: Props) {
   const relatedCases = page.relatedCaseSlugs
     .map((s) => getCaseBySlug(s))
     .filter(Boolean);
+  const relatedPosts = page.relatedPostSlugs
+    .map((s) => getPostBySlug(s))
+    .filter(Boolean);
+  const applyHref = zayavkaHref(page.leadType);
 
   return (
     <SiteChrome active="poslugy">
@@ -154,6 +160,29 @@ export default async function ServicePage({ params }: Props) {
           </>
         ) : null}
 
+        {relatedPosts.length ? (
+          <>
+            <h2 className="mt-14 font-display text-2xl font-semibold">
+              Читати також
+            </h2>
+            <ul className="mt-5 space-y-3">
+              {relatedPosts.map((p) =>
+                p ? (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/blog/${p.slug}`}
+                      className="font-semibold text-[var(--accent)] focus-ring"
+                    >
+                      {p.h1} →
+                    </Link>
+                    <p className="mt-1 text-sm text-[var(--dim)]">{p.lead}</p>
+                  </li>
+                ) : null,
+              )}
+            </ul>
+          </>
+        ) : null}
+
         <h2 className="mt-14 font-display text-2xl font-semibold">Питання</h2>
         <dl className="list-plain mt-5">
           {page.faq.map((item) => (
@@ -165,7 +194,7 @@ export default async function ServicePage({ params }: Props) {
         </dl>
 
         <div className="mt-12 flex flex-wrap items-center gap-4">
-          <Link href="/zayavka" className="btn-primary focus-ring">
+          <Link href={applyHref} className="btn-primary focus-ring">
             Заявка / орієнтир
           </Link>
           <Link href="/poslugy" className="text-sm font-semibold focus-ring">

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { submitIndexNow } from "@/lib/indexnow";
-import { getIndexableUrls } from "@/lib/sitemap-urls";
+import { getIndexableUrls, getIndexNowCoverage } from "@/lib/sitemap-urls";
 import { SITE } from "@/lib/constants";
 
 function authorize(request: Request) {
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 
   const result = await submitIndexNow(urls);
   return NextResponse.json(
-    { ...result, count: urls.length },
+    { ...result, count: urls.length, coverage: getIndexNowCoverage() },
     { status: result.ok ? 200 : 502 },
   );
 }
@@ -65,6 +65,8 @@ export async function GET(request: Request) {
         auth: "Bearer INDEXNOW_SECRET or CRON_SECRET",
         keyLocation: `${SITE.url}/ndx-seo-7c4e9a2f1b8d4063.txt`,
         urls: getIndexableUrls().length,
+        coverage: getIndexNowCoverage(),
+        ping: "POST /api/indexnow (Bearer INDEXNOW_SECRET|CRON_SECRET) or: npm run indexnow:ping",
       },
       { status: auth.status === 401 ? 401 : 200 },
     );
@@ -73,7 +75,12 @@ export async function GET(request: Request) {
   const urls = getIndexableUrls();
   const result = await submitIndexNow(urls);
   return NextResponse.json(
-    { ...result, count: urls.length, source: "cron-or-auth-get" },
+    {
+      ...result,
+      count: urls.length,
+      coverage: getIndexNowCoverage(urls),
+      source: "cron-or-auth-get",
+    },
     { status: result.ok ? 200 : 502 },
   );
 }

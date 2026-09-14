@@ -48,7 +48,7 @@ export const BLOG_POSTS = [
     ],
     cta: {
       text: "Потрібен орієнтир по вашому лендінгу",
-      href: "/zayavka",
+      href: "/zayavka?type=landing",
     },
     relatedServices: ["sajty-ta-lendingy"] as const,
   },
@@ -99,7 +99,7 @@ export const BLOG_POSTS = [
     ],
     cta: {
       text: "Оцінити магазин під ваш асортимент",
-      href: "/zayavka",
+      href: "/zayavka?type=shop",
     },
     relatedServices: ["internet-magazyny"] as const,
   },
@@ -148,7 +148,7 @@ export const BLOG_POSTS = [
     ],
     cta: {
       text: "Підказати стек під вашу задачу",
-      href: "/zayavka",
+      href: "/zayavka?type=app",
     },
     relatedServices: ["sajty-ta-lendingy", "veb-systemy-ta-kabinety"] as const,
   },
@@ -201,9 +201,9 @@ export const BLOG_POSTS = [
     ],
     cta: {
       text: "Залишити заявку на сайт під ключ",
-      href: "/zayavka",
+      href: "/zayavka?type=landing",
     },
-    relatedServices: ["sajty-ta-lendingy"] as const,
+    relatedServices: ["sajty-ta-lendingy", "poryatunok-proektu"] as const,
   },
 ] as const;
 

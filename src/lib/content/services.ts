@@ -82,6 +82,11 @@ export const SERVICE_PAGES = [
       },
     ],
     relatedCaseSlugs: ["lending-pid-reklamu"] as const,
+    leadType: "landing" as const,
+    relatedPostSlugs: [
+      "skilky-koshtuye-lending-ukrayina",
+      "yak-zamovyty-sayt-pid-klyuch",
+    ] as const,
   },
   {
     slug: "internet-magazyny",
@@ -159,6 +164,11 @@ export const SERVICE_PAGES = [
       },
     ],
     relatedCaseSlugs: ["magazyn-mvp"] as const,
+    leadType: "shop" as const,
+    relatedPostSlugs: [
+      "skilky-koshtuye-internet-magazyn",
+      "yak-zamovyty-sayt-pid-klyuch",
+    ] as const,
   },
   {
     slug: "veb-systemy-ta-kabinety",
@@ -232,6 +242,11 @@ export const SERVICE_PAGES = [
       },
     ],
     relatedCaseSlugs: ["kabinet-komandy"] as const,
+    leadType: "app" as const,
+    relatedPostSlugs: [
+      "nextjs-chy-wordpress",
+      "yak-zamovyty-sayt-pid-klyuch",
+    ] as const,
   },
   {
     slug: "poryatunok-proektu",
@@ -305,6 +320,11 @@ export const SERVICE_PAGES = [
       },
     ],
     relatedCaseSlugs: ["stabilizaciya-proektu"] as const,
+    leadType: "rescue" as const,
+    relatedPostSlugs: [
+      "yak-zamovyty-sayt-pid-klyuch",
+      "nextjs-chy-wordpress",
+    ] as const,
   },
 ] as const;
 

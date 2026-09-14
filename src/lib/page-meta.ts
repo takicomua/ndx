@@ -15,6 +15,7 @@ type PageMetaInput = {
 /**
  * Per-page metadata with correct OG/Twitter/canonical.
  * Root layout defaults alone inherit homepage URL/title — always use this on inner pages.
+ * Homepage uses this helper plus `title: { absolute }` so the layout template is not applied.
  */
 export function buildPageMetadata({
   title,

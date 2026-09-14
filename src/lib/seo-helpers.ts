@@ -21,6 +21,37 @@ export function getPublicEmail(): string | undefined {
   return isPlaceholderContact(CONTACTS.email) ? undefined : CONTACTS.email;
 }
 
+/** Real NAP only. Empty env → field omitted from JSON-LD (never invent). */
+export function getBusinessPhone(): string | undefined {
+  const v = process.env.NEXT_PUBLIC_BUSINESS_PHONE?.trim();
+  return v || undefined;
+}
+
+export function getStreetAddress(): string | undefined {
+  const v = process.env.NEXT_PUBLIC_BUSINESS_STREET?.trim();
+  return v || undefined;
+}
+
+export function getBusinessGeo():
+  | { latitude: number; longitude: number }
+  | undefined {
+  const lat = Number(process.env.NEXT_PUBLIC_BUSINESS_LAT?.trim());
+  const lng = Number(process.env.NEXT_PUBLIC_BUSINESS_LNG?.trim());
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return undefined;
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return undefined;
+  return { latitude: lat, longitude: lng };
+}
+
+export function postalAddress() {
+  const street = getStreetAddress();
+  return {
+    "@type": "PostalAddress" as const,
+    ...(street ? { streetAddress: street } : {}),
+    addressLocality: "Kyiv",
+    addressCountry: "UA",
+  };
+}
+
 export function absoluteUrl(path = "/") {
   if (path === "/" || path === "") return SITE.url;
   return `${SITE.url}${path.startsWith("/") ? path : `/${path}`}`;

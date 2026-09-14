@@ -24,6 +24,13 @@ export function middleware(request: NextRequest) {
   }
 
   const url = request.nextUrl.clone();
+
+  // Legacy Ads / bookmarks: /brief → /zayavka (query preserved).
+  if (url.pathname === "/brief" || url.pathname === "/brief/") {
+    url.pathname = "/zayavka";
+    return withSecurity(NextResponse.redirect(url, 308));
+  }
+
   const host = (request.headers.get("host") || "").toLowerCase().split(":")[0];
   const proto =
     request.headers.get("x-forwarded-proto") ||

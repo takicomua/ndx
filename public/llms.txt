@@ -6,7 +6,7 @@
 - [Services](https://ndx.com.ua/poslugy): Service index with price ranges
 - [Cases](https://ndx.com.ua/keysy): Anonymized real-work cases (NDA)
 - [Blog](https://ndx.com.ua/blog): Long-tail guides (pricing, stack, how to order)
-- [Brief / lead](https://ndx.com.ua/zayavka): Request estimate
+- [Brief / lead](https://ndx.com.ua/zayavka): Request estimate (`/brief` 308 → `/zayavka`)
 - [Contact](https://ndx.com.ua/kontakt): NAP + Telegram / email
 
 ## Services

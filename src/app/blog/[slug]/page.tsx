@@ -77,22 +77,33 @@ export default async function BlogPostPage({ params }: Props) {
         ))}
 
         {related.length ? (
-          <p className="mt-12 text-sm text-[var(--dim)]">
-            Послуги:{" "}
-            {related.map((s, i) =>
-              s ? (
-                <span key={s.slug}>
-                  {i > 0 ? ", " : null}
-                  <Link
-                    href={`/poslugy/${s.slug}`}
-                    className="font-semibold text-[var(--accent)] focus-ring"
-                  >
-                    {s.shortTitle}
-                  </Link>
-                </span>
-              ) : null,
-            )}
-          </p>
+          <aside className="mt-14 border-t border-[var(--line)] pt-10">
+            <h2 className="font-display text-2xl font-semibold">Далі по темі</h2>
+            <p className="mt-4 text-[16px] leading-relaxed text-[var(--dim)]">
+              Якщо плануєте запуск, а не лише теорію — дивіться{" "}
+              {related.map((s, i) =>
+                s ? (
+                  <span key={s.slug}>
+                    {i > 0 ? (i === related.length - 1 ? " або " : ", ") : null}
+                    <Link
+                      href={`/poslugy/${s.slug}`}
+                      className="font-semibold text-[var(--accent)] focus-ring"
+                    >
+                      {s.shortTitle.toLowerCase()}
+                    </Link>
+                  </span>
+                ) : null,
+              )}
+              . Орієнтир по строках і бюджету — через{" "}
+              <Link
+                href={post.cta.href}
+                className="font-semibold text-[var(--accent)] focus-ring"
+              >
+                заявку
+              </Link>
+              .
+            </p>
+          </aside>
         ) : null}
 
         <div className="mt-12 flex flex-wrap items-center gap-4">

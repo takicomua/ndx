@@ -5,12 +5,21 @@ import {
   SITE,
 } from "@/lib/constants";
 import { SERVICE_PAGES } from "@/lib/content/services";
-import { absoluteUrl, getPublicEmail, getSameAs } from "@/lib/seo-helpers";
+import {
+  absoluteUrl,
+  getBusinessGeo,
+  getBusinessPhone,
+  getPublicEmail,
+  getSameAs,
+  postalAddress,
+} from "@/lib/seo-helpers";
 
 /** Structured data for Google rich results */
 export function JsonLd() {
   const sameAs = getSameAs();
   const email = getPublicEmail();
+  const phone = getBusinessPhone();
+  const geo = getBusinessGeo();
   const orgId = `${SITE.url}/#organization`;
   const personId = `${SITE.url}/#person`;
 
@@ -28,6 +37,7 @@ export function JsonLd() {
         image: `${SITE.url}/opengraph-image`,
         description: SITE.description,
         ...(email ? { email } : {}),
+        address: postalAddress(),
         foundingLocation: {
           "@type": "Country",
           name: "Ukraine",
@@ -94,19 +104,18 @@ export function JsonLd() {
           "Київ",
           "Україна",
         ],
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Kyiv",
-          addressCountry: "UA",
-        },
+        address: postalAddress(),
       },
       {
-        "@type": "ProfessionalService",
-        "@id": `${SITE.url}/#service`,
-        name: "NDX — інженер повного циклу",
+        "@type": ["ProfessionalService", "LocalBusiness"],
+        "@id": `${SITE.url}/#localbusiness`,
+        name: "NDX · DIACHENKO",
+        alternateName: ["NDX", SITE.brand, SITE.domain],
         image: `${SITE.url}/opengraph-image`,
         url: SITE.url,
-        description: SERVICES.lead,
+        description: SITE.description,
+        ...(email ? { email } : {}),
+        ...(phone ? { telephone: phone } : {}),
         priceRange: "$400–$8000+",
         areaServed: [
           { "@type": "Country", name: "Ukraine" },
@@ -115,11 +124,18 @@ export function JsonLd() {
         availableLanguage: ["uk", "en"],
         provider: { "@id": personId },
         brand: { "@id": orgId },
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Kyiv",
-          addressCountry: "UA",
-        },
+        parentOrganization: { "@id": orgId },
+        address: postalAddress(),
+        ...(geo
+          ? {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: geo.latitude,
+                longitude: geo.longitude,
+              },
+            }
+          : {}),
+        ...(sameAs.length ? { sameAs } : {}),
         serviceType: SERVICES.items.map((i) => i.title),
         hasOfferCatalog: {
           "@type": "OfferCatalog",

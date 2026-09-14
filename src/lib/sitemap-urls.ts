@@ -50,3 +50,57 @@ export function getIndexableUrls(): string[] {
     e.path === "/" ? SITE.url : `${SITE.url}${e.path}`,
   );
 }
+
+export type IndexNowCoverage = {
+  total: number;
+  home: boolean;
+  blog: boolean;
+  blogPosts: number;
+  poslugy: boolean;
+  poslugyPages: number;
+  keysy: boolean;
+  keysyPages: number;
+  zayavka: boolean;
+  ok: boolean;
+};
+
+export function getIndexNowCoverage(
+  urls: string[] = getIndexableUrls(),
+): IndexNowCoverage {
+  const paths = urls.map((u) => {
+    try {
+      const p = new URL(u).pathname.replace(/\/$/, "");
+      return p || "/";
+    } catch {
+      return u;
+    }
+  });
+  const has = (p: string) => paths.includes(p);
+  const children = (prefix: string) =>
+    paths.filter((x) => x.startsWith(`${prefix}/`)).length;
+
+  const blogPosts = children("/blog");
+  const poslugyPages = children("/poslugy");
+  const keysyPages = children("/keysy");
+
+  return {
+    total: urls.length,
+    home: has("/"),
+    blog: has("/blog"),
+    blogPosts,
+    poslugy: has("/poslugy"),
+    poslugyPages,
+    keysy: has("/keysy"),
+    keysyPages,
+    zayavka: has("/zayavka"),
+    ok:
+      has("/") &&
+      has("/blog") &&
+      blogPosts >= 1 &&
+      has("/poslugy") &&
+      poslugyPages >= 1 &&
+      has("/keysy") &&
+      keysyPages >= 1 &&
+      has("/zayavka"),
+  };
+}

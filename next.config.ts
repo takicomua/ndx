@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  async redirects() {
+    // Query string (?type=, UTM, gclid, …) is passed through by Next.js.
+    return [
+      {
+        source: "/brief",
+        destination: "/zayavka",
+        permanent: true, // 308
+      },
+    ];
+  },
   async headers() {
     return [
       {

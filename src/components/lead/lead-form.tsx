@@ -1,14 +1,34 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import { trackLeadSubmit } from "@/lib/analytics";
 import { CONTACTS } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
 
 type Status = "idle" | "loading" | "ok" | "err";
 
+function typeFromQuery(search: URLSearchParams) {
+  const raw = search.get("type")?.trim();
+  if (raw && LEAD.types.some((t) => t.id === raw)) return raw;
+  return LEAD.types[0].id;
+}
+
 export function LeadForm() {
-  const [type, setType] = useState<string>(LEAD.types[0].id);
+  return (
+    <Suspense fallback={<LeadFormFields initialType={LEAD.types[0].id} />}>
+      <LeadFormFromQuery />
+    </Suspense>
+  );
+}
+
+function LeadFormFromQuery() {
+  const search = useSearchParams();
+  return <LeadFormFields initialType={typeFromQuery(search)} />;
+}
+
+function LeadFormFields({ initialType }: { initialType: string }) {
+  const [type, setType] = useState<string>(initialType);
   const [budget, setBudget] = useState<string>(LEAD.budgets[0].id);
   const [timeline, setTimeline] = useState<string>(LEAD.timelines[3].id);
   const [status, setStatus] = useState<Status>("idle");
