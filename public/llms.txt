@@ -17,6 +17,7 @@
 - [Project rescue](https://ndx.com.ua/poslugy/poryatunok-proektu)
 
 ## Blog
+- [NDX is not Nasdaq](https://ndx.com.ua/blog/ndx-ne-nasdaq)
 - [What is NDX · DIACHENKO](https://ndx.com.ua/blog/shcho-take-ndx-diachenko)
 - [Landing page cost in Ukraine](https://ndx.com.ua/blog/skilky-koshtuye-lending-ukrayina)
 - [Turnkey site cost in Ukraine](https://ndx.com.ua/blog/skilky-koshtuye-sayt-pid-klyuch-ukrayina)

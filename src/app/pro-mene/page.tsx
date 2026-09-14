@@ -4,6 +4,7 @@ import { FaqPageJsonLd, PageJsonLd } from "@/components/seo/page-json-ld";
 import { FaqBlock } from "@/components/site/faq-block";
 import { SiteChrome } from "@/components/site/chrome";
 import { ABOUT, FAQ, SITE } from "@/lib/constants";
+import { getPostBySlug } from "@/lib/content/blog";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -12,7 +13,16 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/pro-mene",
 });
 
+const ALSO_READ = [
+  "ndx-ne-nasdaq",
+  "shcho-take-ndx-diachenko",
+] as const;
+
 export default function AboutPage() {
+  const alsoRead = ALSO_READ.map((slug) => getPostBySlug(slug)).filter(
+    (p) => Boolean(p),
+  );
+
   return (
     <SiteChrome active="pro-mene">
       <PageJsonLd
@@ -32,6 +42,9 @@ export default function AboutPage() {
         <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight">
           {ABOUT.title}
         </h1>
+        <p className="mt-3 text-sm text-[var(--dim)]">
+          Персональний інженерний бренд, не індекс Nasdaq.
+        </p>
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
           {ABOUT.lead}
         </p>
@@ -43,16 +56,28 @@ export default function AboutPage() {
         <p className="mt-6 text-sm text-[var(--fg)]">
           {SITE.geo} · {SITE.domain}
         </p>
-        <p className="mt-4 text-[16px] leading-relaxed text-[var(--dim)]">
-          Докладніше про назву бренду — у статті{" "}
-          <Link
-            href="/blog/shcho-take-ndx-diachenko"
-            className="font-semibold text-[var(--accent)] focus-ring"
-          >
-            «Що таке NDX · DIACHENKO»
-          </Link>
-          .
-        </p>
+        {alsoRead.length ? (
+          <aside className="mt-10">
+            <h2 className="font-display text-xl font-semibold tracking-tight">
+              Читати також
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {alsoRead.map((p) =>
+                p ? (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/blog/${p.slug}`}
+                      className="font-semibold text-[var(--accent)] focus-ring"
+                    >
+                      {p.h1} →
+                    </Link>
+                    <p className="mt-1 text-sm text-[var(--dim)]">{p.lead}</p>
+                  </li>
+                ) : null,
+              )}
+            </ul>
+          </aside>
+        ) : null}
 
         <h2 className="mt-16 font-display text-2xl font-semibold tracking-tight">
           Як працюю

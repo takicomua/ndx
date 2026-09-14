@@ -1,5 +1,5 @@
 # Inbox · Grok → Cursor
-Оновлено: 2026-09-14
+Оновлено: 2026-09-15
 
 > Cursor: виконуй пункти зі статусом `- [ ]`. Після виконання став `- [x]` і коротко пиши результат у `OUTBOX.md`.
 
@@ -51,6 +51,24 @@
   - Файли / шляхи: `src/lib/content/blog.ts`, `src/app/pro-mene/page.tsx`, `public/llms.txt`
   - Done when: пост у блозі, sitemap підхоплює через BLOG_POSTS
   - Пріоритет: P2
+
+- [x] **D-001** Blog post: NDX — це не Nasdaq
+  - Що зробити: `/blog/ndx-ne-nasdaq`; тон сайту; CTA `/pro-mene` + `/zayavka`; лінк на `/blog/shcho-take-ndx-diachenko`; індекс, sitemap/BLOG_POSTS, llms.txt, «Читати також» на `/pro-mene`
+  - Файли / шляхи: `src/lib/content/blog.ts`, `src/app/blog/[slug]/page.tsx`, `src/app/pro-mene/page.tsx`, `public/llms.txt`
+  - Done when: пост у додатку + внутрішні лінки
+  - Пріоритет: P0
+
+- [x] **D-002** On-site disambiguation microcopy
+  - Що зробити: короткий рядок біля бренду на `/` і `/pro-mene`; FAQ «NDX — це Nasdaq?»
+  - Файли / шляхи: `src/components/home/page.tsx`, `src/app/pro-mene/page.tsx`, `src/lib/constants.ts`
+  - Done when: видимий рядок, не спам
+  - Пріоритет: P0
+
+- [x] **D-003** Schema tweak vs Nasdaq
+  - Що зробити: посилити `disambiguatingDescription` природно; Organization `name` лишається `NDX · DIACHENKO`
+  - Файли / шляхи: `src/lib/constants.ts`, `src/components/seo/json-ld.tsx`
+  - Done when: без keyword stuffing, без фейкових claim
+  - Пріоритет: P1
 
 ## Нотатки для Cursor
 

@@ -21,7 +21,7 @@ export const SITE = {
    * Separates this personal brand from Nasdaq-100 ticker NDX.
    */
   disambiguatingDescription:
-    "Інженер повного циклу (full-cycle web engineer): сайти · магазини · системи. Україна. Персональний бренд NDX · DIACHENKO, сайт ndx.com.ua — не біржовий індекс Nasdaq.",
+    "Персональний бренд full-cycle веб-інженера DIACHENKO: сайти, магазини й системи від ідеї до запуску. Україна, ndx.com.ua — не індекс Nasdaq-100.",
   /**
    * alternateName for Organization / Person / WebSite.
    * Ukrainian given name is omitted: it is not used on the live site.
@@ -149,6 +149,10 @@ export const FAQ = {
     {
       q: "Хто такий DIACHENKO / NDX?",
       a: "DIACHENKO — full-cycle веб-інженер. Працюю під брендом NDX: одна людина веде проєкт від брифу до запуску (структура, код, дані, деплой). Портфоліо й контакти — ndx.com.ua.",
+    },
+    {
+      q: "NDX — це Nasdaq?",
+      a: "Ні. Тикер Nasdaq-100 теж NDX, але це інший світ. Тут NDX · DIACHENKO — персональний бренд веб-інженера в Україні: сайти, магазини й системи від ідеї до запуску. Не біржа і не агенція.",
     },
     {
       q: "NDX — це агенція?",

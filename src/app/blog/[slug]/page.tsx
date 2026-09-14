@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
-import { BLOG_POSTS, getPostBySlug } from "@/lib/content/blog";
+import { BLOG_POSTS, getPostBySlug, getRelatedPosts } from "@/lib/content/blog";
 import { getServiceBySlug } from "@/lib/content/services";
 import { buildPageMetadata } from "@/lib/page-meta";
 
@@ -72,6 +72,9 @@ export default async function BlogPostPage({ params }: Props) {
   const related = post.relatedServices
     .map((s) => getServiceBySlug(s))
     .filter(Boolean);
+  const relatedPosts = getRelatedPosts(post);
+  const ctaSecondary =
+    "ctaSecondary" in post ? post.ctaSecondary : undefined;
 
   return (
     <SiteChrome active="blog">
@@ -114,6 +117,25 @@ export default async function BlogPostPage({ params }: Props) {
           </section>
         ))}
 
+        {relatedPosts.length ? (
+          <aside className="mt-14 border-t border-[var(--line)] pt-10">
+            <h2 className="font-display text-2xl font-semibold">Читати також</h2>
+            <ul className="mt-5 space-y-3">
+              {relatedPosts.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/blog/${p.slug}`}
+                    className="font-semibold text-[var(--accent)] focus-ring"
+                  >
+                    {p.h1} →
+                  </Link>
+                  <p className="mt-1 text-sm text-[var(--dim)]">{p.lead}</p>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        ) : null}
+
         {related.length ? (
           <aside className="mt-14 border-t border-[var(--line)] pt-10">
             <h2 className="font-display text-2xl font-semibold">Далі по темі</h2>
@@ -148,6 +170,11 @@ export default async function BlogPostPage({ params }: Props) {
           <Link href={post.cta.href} className="btn-primary focus-ring">
             {post.cta.text}
           </Link>
+          {ctaSecondary ? (
+            <Link href={ctaSecondary.href} className="btn-line focus-ring">
+              {ctaSecondary.text}
+            </Link>
+          ) : null}
           <Link href="/blog" className="text-sm font-semibold focus-ring">
             ← Усі статті
           </Link>
