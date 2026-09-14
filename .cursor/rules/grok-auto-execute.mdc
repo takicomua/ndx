@@ -1,0 +1,16 @@
+---
+description: Auto-execute open Grok inbox tasks without waiting for paste
+alwaysApply: true
+---
+
+# Grok auto-execute
+
+Коли в повідомленні є `AGENT_LOOP_TICK_grok_inbox`, або користувач каже «авто», «виконай grok», «inbox»:
+
+1. Одразу `Read` `bridge/grok/INBOX.md`.
+2. Якщо є `- [ ]` — виконай усі (P0 → P1 → P2), без зайвих уточнень, якщо Done when зрозумілий.
+3. Познач `- [x]`, онови `bridge/grok/OUTBOX.md`.
+4. Не коміть/push без явного прохання.
+5. Якщо задач немає — одна коротка відповідь «inbox порожній».
+
+Не ігноруй авто-тіки: це і є режим «Grok сказав → Cursor зробив».
