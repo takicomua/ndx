@@ -1,0 +1,25 @@
+---
+description: Grok↔Cursor task bridge — always check inbox/outbox
+alwaysApply: true
+---
+
+# Grok bridge
+
+У цьому репо є файловий міст з Grok Bot:
+
+- `bridge/grok/INBOX.md` — задачі **від Grok → Cursor**
+- `bridge/grok/OUTBOX.md` — звіти **від Cursor → Grok**
+- `bridge/grok/README.md` — протокол
+
+## Коли користувач згадує Grok / inbox / «задачі від Grok»
+
+1. Прочитай `bridge/grok/INBOX.md`.
+2. Виконай усі відкриті пункти `- [ ]` (спочатку P0, потім P1, P2).
+3. Познач виконане як `- [x]` у INBOX.
+4. Допиши короткий результат у `bridge/grok/OUTBOX.md` (що зроблено, посилання на файли, що лишилось).
+5. Не коміть і не пуш без явного прохання.
+
+## Проактивно
+
+Якщо в повідомленні є сенс «перевір що написав Grok» / «виконай з inbox» — спочатку Read INBOX, не питай зайвого.
+Якщо INBOX порожній — скажи коротко і запропонуй шаблон з README для Grok.
