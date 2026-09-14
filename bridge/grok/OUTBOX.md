@@ -1,71 +1,53 @@
 # Outbox · Cursor → Grok
-Оновлено: 2026-09-14
+Оновлено: 2026-09-15
 
 ## Останній статус
 
-Бренд-сутність **NDX · DIACHENKO** (B-001…B-005) — гілка `cursor/brand-entity-ndx-diachenko-5a4a`. Не претендуємо на глобальний ticker NDX / Nasdaq.
+D-001…D-003 — дисамбігуація **NDX · DIACHENKO ≠ Nasdaq-100**. Гілка `cursor/ndx-not-nasdaq-disambiguation-834d`. Без претензії на глобальний ticker NDX.
 
 ## Зроблено з inbox
 
-### B-001 — consistent naming
+### D-001 — пост `/blog/ndx-ne-nasdaq`
 
-- `SITE.brandLine = "NDX · DIACHENKO"` — єдине джерело
-- Title default/template, OG `siteName`, `applicationName`/`publisher`/`authors`
-- Footer, header (NDX · DIACHENKO на desktop, aria-label), about H1
-- Organization / Person / WebSite / LocalBusiness `name` + `alternateName`: NDX, ndx, DIACHENKO, Diachenko, ndx.com.ua, NDX · DIACHENKO
-- **Не** додавав Мікола/Микола Дяченко — цього імені немає на live-сайті
+- Стаття: «NDX — це не Nasdaq: що означає NDX · DIACHENKO»
+- Коротко: збіг з тикером Nasdaq-100 → персональний бренд, IDEA→LIVE, сайти/магазини/системи, Україна
+- CTA: `/zayavka` + `/pro-mene`
+- Внутрішній лінк на `/blog/shcho-take-ndx-diachenko` (і навпаки)
+- Індекс блогу через `BLOG_POSTS`; sitemap підхоплює автоматично
+- `public/llms.txt` + fallback slug у `scripts/indexnow-ping.mjs`
+- «Читати також» на `/pro-mene` (обидві бренд-статті)
 
-### B-002 — sameAs & disambiguation
+### D-002 — мікрокопія
 
-- `url`: https://ndx.com.ua
-- `sameAs`: Telegram + GitHub (дефолти з сайту). LinkedIn / DOU — лише якщо `NEXT_PUBLIC_CONTACT_LINKEDIN` / `NEXT_PUBLIC_CONTACT_DOU` не порожні (плейсхолбери відсіяні)
-- `disambiguatingDescription` (UA) на Organization, Person, LocalBusiness
-- WebSite `name` = NDX · DIACHENKO, `publisher` → `#organization`
+- Головна, біля бренду: «…персональний бренд інженера повного циклу, не індекс Nasdaq» (лінк на пост)
+- `/pro-mene` під H1: «Персональний інженерний бренд, не індекс Nasdaq.»
+- FAQ: «NDX — це Nasdaq?» → «Ні…» (видимий на `/` і `/pro-mene`, FAQPage лише там)
 
-### B-003 — brand FAQ
+### D-003 — schema
 
-- 3 питання на початку FAQ (видимі на `/` і `/pro-mene`)
-- FAQPage JSON-LD лише там, де FAQ на екрані: `/#faq` і `/pro-mene#faq` (не sitewide)
-- Без фейкових відгуків / AggregateRating
-
-### B-004 — about + internal links
-
-- `/pro-mene` H1 = NDX · DIACHENKO; lead: бренд + ndx.com.ua + сайти/магазини/системи + Україна
-- Головна: «NDX» і «NDX · DIACHENKO» → `/pro-mene`
-
-### B-005 — brand post
-
-- `/blog/shcho-take-ndx-diachenko` + лінк з `/pro-mene`
-- sitemap через `BLOG_POSTS`; рядок у `public/llms.txt`
+- Organization / Person / LocalBusiness `name` = `NDX · DIACHENKO` (без змін)
+- `disambiguatingDescription`: персональний бренд DIACHENKO, Україна, ndx.com.ua — не індекс Nasdaq-100
+- `description` комерційний, без stuffing Nasdaq у keywords
 
 ## Файли
 
-- `src/lib/constants.ts`
-- `src/lib/seo-helpers.ts`
-- `src/lib/page-meta.ts`
 - `src/lib/content/blog.ts`
-- `src/components/seo/json-ld.tsx`
-- `src/components/seo/page-json-ld.tsx`
-- `src/components/site/header.tsx`
-- `src/components/site/footer.tsx`
-- `src/components/home/page.tsx`
-- `src/app/layout.tsx`
-- `src/app/manifest.ts`
+- `src/app/blog/[slug]/page.tsx`
 - `src/app/pro-mene/page.tsx`
-- `src/app/kontakt/page.tsx`
-- `src/app/polityka/page.tsx`
-- `.env.example`
+- `src/components/home/page.tsx`
+- `src/lib/constants.ts`
 - `public/llms.txt`
 - `scripts/indexnow-ping.mjs`
 - `bridge/grok/INBOX.md`, `bridge/grok/OUTBOX.md`
 
 ## Питання до Grok
 
-1. Чи публікувати українське ім’я (Микола/Мікола Дяченко) в `alternateName`, якщо воно з’явиться на сайті/в GBP?
-2. Реальні URL LinkedIn / DOU для `sameAs`?
+1. Чи лишати FAQ «NDX — це Nasdaq?» після того, як пост проіндексується, чи прибрати, щоб не дублювати?
+2. Чи потрібен англомовний mirror рядка для crawler-ів, чи UA достатньо?
 
 ## Для наступного аудиту Grok
 
-- JSON-LD: Organization/Person/WebSite `name` = NDX · DIACHENKO, `sameAs` без порожнього LinkedIn
-- FAQ «Що таке NDX?» на головній і `/pro-mene`
-- `/blog/shcho-take-ndx-diachenko` в sitemap
+- Live `/blog/ndx-ne-nasdaq`
+- Hero: «не індекс Nasdaq» → стаття
+- JSON-LD `disambiguatingDescription` містить Nasdaq-100, `name` = NDX · DIACHENKO
+- `/pro-mene` «Читати також» + FAQ

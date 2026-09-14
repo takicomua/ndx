@@ -2,6 +2,58 @@
 
 export const BLOG_POSTS = [
   {
+    slug: "ndx-ne-nasdaq",
+    title: "NDX — це не Nasdaq: що означає NDX · DIACHENKO",
+    description:
+      "NDX на ndx.com.ua — персональний бренд веб-інженера DIACHENKO в Україні, не тикер Nasdaq-100. Сайти, магазини й системи від ідеї до запуску.",
+    h1: "NDX — це не Nasdaq: що означає NDX · DIACHENKO",
+    date: "2026-09-15",
+    readMinutes: 4,
+    tags: ["NDX", "Nasdaq", "бренд"],
+    lead:
+      "Три літери NDX у Google майже завжди ведуть на Nasdaq-100. Це очікувано: індекс більший за персональний сайт. Якщо ви на ndx.com.ua — ви не на біржі. Тут NDX · DIACHENKO: інженер повного циклу в Україні.",
+    sections: [
+      {
+        h: "Чому збіг",
+        p: [
+          "У фінансах NDX — тикер індексу Nasdaq-100. Котирування, новини, графики. Я не претендую на цей запит і не граю в «ми теж NDX, але кращі».",
+          "На ndx.com.ua ті самі три літери — робоча назва. DIACHENKO — прізвище. Разом: NDX · DIACHENKO. Збіг випадковий, всесвіт інший.",
+        ],
+      },
+      {
+        h: "Що означає NDX тут",
+        p: [
+          "Персональний бренд, не агенція: одна людина веде проєкт від ідеї до запуску (IDEA → LIVE) — структура, код, дані, деплой.",
+          "Робота: сайти й лендінги, інтернет-магазини, кабінети й системи. Гео — Україна, Київ / remote.",
+          "Коротко про формат — у статті [Що таке NDX · DIACHENKO](/blog/shcho-take-ndx-diachenko). Хто я на практиці — на сторінці [Про мене](/pro-mene).",
+        ],
+      },
+      {
+        h: "Як не плутати",
+        p: [
+          "Шукаєте котирування — це не цей сайт. Шукаєте, хто збере сайт, магазин чи систему під ключ в Україні — це я.",
+          "Не обіцяю топ-1 Google за голим «NDX». Реалістично: кваліфіковані запити на кшталт NDX · DIACHENKO, ndx.com.ua, «замовити сайт».",
+        ],
+      },
+      {
+        h: "Якщо є задача",
+        p: [
+          "Орієнтир по строках і бюджету — через [заявку](/zayavka). Контакти й формат роботи — у [Про мене](/pro-mene).",
+        ],
+      },
+    ],
+    cta: {
+      text: "Залишити заявку",
+      href: "/zayavka",
+    },
+    ctaSecondary: {
+      text: "Про мене",
+      href: "/pro-mene",
+    },
+    relatedServices: ["sajty-ta-lendingy"] as const,
+    relatedPostSlugs: ["shcho-take-ndx-diachenko"] as const,
+  },
+  {
     slug: "shcho-take-ndx-diachenko",
     title: "Що таке NDX · DIACHENKO",
     description:
@@ -31,7 +83,7 @@ export const BLOG_POSTS = [
         h: "Чим NDX не є",
         p: [
           "Не агенція з окремими ролями й акаунтом-менеджером.",
-          "Не біржовий індекс Nasdaq-100 (тикер NDX). Збіг літер — випадковий: тут йдеться про веб-розробку в Україні.",
+          "Не біржовий індекс Nasdaq-100 (тикер NDX). Збіг літер — випадковий: тут йдеться про веб-розробку в Україні. Окремо — [NDX — це не Nasdaq](/blog/ndx-ne-nasdaq).",
           "Не обіцянка «топ-1 Google за місяць» за голим запитом NDX.",
         ],
       },
@@ -47,6 +99,7 @@ export const BLOG_POSTS = [
       href: "/zayavka",
     },
     relatedServices: ["sajty-ta-lendingy"] as const,
+    relatedPostSlugs: ["ndx-ne-nasdaq"] as const,
   },
   {
     slug: "skilky-koshtuye-lending-ukrayina",
@@ -392,4 +445,11 @@ export function getPostBySlug(slug: string) {
 
 export function getPostsSorted() {
   return [...BLOG_POSTS].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+export function getRelatedPosts(post: BlogPost) {
+  if (!("relatedPostSlugs" in post) || !post.relatedPostSlugs) return [];
+  return post.relatedPostSlugs
+    .map((slug) => getPostBySlug(slug))
+    .filter((p): p is BlogPost => Boolean(p));
 }

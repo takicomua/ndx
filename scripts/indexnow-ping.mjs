@@ -54,6 +54,7 @@ function localSitemapUrls() {
     "yak-zamovyty-sayt-pid-klyuch",
     "skilky-koshtuye-sayt-pid-klyuch-ukrayina",
     "landing-pid-google-ads",
+    "ndx-ne-nasdaq",
     "shcho-take-ndx-diachenko",
   ]);
   const paths = [

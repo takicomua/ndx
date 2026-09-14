@@ -39,7 +39,14 @@ export function HomePage() {
             >
               {SITE.brandLine}
             </Link>
-            {" — персональний бренд full-cycle інженера. Сайти, магазини й системи на "}
+            {" — персональний бренд інженера повного циклу, "}
+            <Link
+              href="/blog/ndx-ne-nasdaq"
+              className="underline decoration-[var(--ink-line)] underline-offset-4 hover:text-[var(--ink-fg)] focus-ring"
+            >
+              не індекс Nasdaq
+            </Link>
+            {". Сайти, магазини й системи на "}
             {SITE.domain}.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
