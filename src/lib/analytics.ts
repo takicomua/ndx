@@ -12,9 +12,9 @@ type TrackerWindow = Window & {
 
 /**
  * Successful Brief submit.
- * - Always pushes `generate_lead` to dataLayer (GTM / GA4).
- * - If tags are loaded directly (no GTM): GA4 generate_lead + Google Ads `conversion`.
- * - Meta Pixel Lead is optional and only fires when a pixel id is set.
+ * Always: dataLayer `generate_lead` (GTM can listen).
+ * If gtag is loaded directly (no GTM) and Ads send_to is set:
+ * GA4 generate_lead + Google Ads `conversion` (Search test).
  */
 export function trackLeadSubmit() {
   if (typeof window === "undefined") return;
