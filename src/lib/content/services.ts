@@ -84,8 +84,9 @@ export const SERVICE_PAGES = [
     relatedCaseSlugs: ["lending-pid-reklamu"] as const,
     leadType: "landing" as const,
     relatedPostSlugs: [
+      "landing-pid-google-ads",
+      "skilky-koshtuye-sayt-pid-klyuch-ukrayina",
       "skilky-koshtuye-lending-ukrayina",
-      "yak-zamovyty-sayt-pid-klyuch",
     ] as const,
   },
   {
@@ -167,7 +168,7 @@ export const SERVICE_PAGES = [
     leadType: "shop" as const,
     relatedPostSlugs: [
       "skilky-koshtuye-internet-magazyn",
-      "yak-zamovyty-sayt-pid-klyuch",
+      "skilky-koshtuye-sayt-pid-klyuch-ukrayina",
     ] as const,
   },
   {

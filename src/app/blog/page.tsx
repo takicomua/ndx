@@ -6,9 +6,9 @@ import { getPostsSorted } from "@/lib/content/blog";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Блог — ціни, стек, як замовити сайт",
+  title: "Блог — ціни, лендінг під Ads, як замовити сайт",
   description:
-    "Статті NDX: скільки коштує лендінг і магазин, Next.js vs WordPress, як замовити сайт під ключ в Україні.",
+    "Статті NDX: скільки коштує сайт під ключ, лендінг під Google Ads, ціни на магазин, Next.js vs шаблон, як замовити сайт в Україні.",
   path: "/blog",
 });
 
@@ -20,7 +20,7 @@ export default function BlogIndexPage() {
       <PageJsonLd
         type="CollectionPage"
         name="Блог NDX"
-        description="Long-tail статті про розробку сайтів, ціни й вибір стеку."
+        description="Long-tail статті про розробку сайтів, ціни, лендінг під Ads і вибір стеку."
         path="/blog"
         breadcrumbs={[
           { name: "NDX", path: "/" },
@@ -31,8 +31,8 @@ export default function BlogIndexPage() {
       <section className="mx-auto max-w-3xl py-16 sm:py-20">
         <h1 className="font-display text-4xl font-semibold tracking-tight">Блог</h1>
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
-          Практичні відповіді на запити на кшталт «скільки коштує…» і «як
-          замовити сайт» — без обіцянок топ-1 за тиждень.
+          Практичні відповіді на запити на кшталт «скільки коштує сайт під ключ»
+          і «лендінг під Google Ads» — без обіцянок топ-1 за тиждень.
         </p>
 
         <ul className="list-plain mt-12">

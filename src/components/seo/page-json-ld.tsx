@@ -125,3 +125,32 @@ export function PageJsonLd({
     />
   );
 }
+
+/** FAQPage JSON-LD for a single URL (do not emit sitewide). */
+export function FaqPageJsonLd({
+  items,
+  id = `${SITE.url}/#faq`,
+}: {
+  items: readonly { q: string; a: string }[];
+  id?: string;
+}) {
+  if (!items.length) return null;
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": id,
+          mainEntity: items.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          })),
+        }),
+      }}
+    />
+  );
+}

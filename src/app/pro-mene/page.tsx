@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
+import { FaqBlock } from "@/components/site/faq-block";
 import { SiteChrome } from "@/components/site/chrome";
-import { ABOUT, FAQ, SITE } from "@/lib/constants";
+import { ABOUT, SITE } from "@/lib/constants";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -23,7 +24,6 @@ export default function AboutPage() {
           { name: "NDX", path: "/" },
           { name: "Про мене", path: "/pro-mene" },
         ]}
-        faq={FAQ.items}
       />
 
       <article className="mx-auto max-w-3xl py-16 sm:py-20">
@@ -64,22 +64,7 @@ export default function AboutPage() {
           {ABOUT.stack}
         </p>
 
-        <h2
-          id="faq"
-          className="mt-16 scroll-mt-24 font-display text-2xl font-semibold tracking-tight"
-        >
-          {FAQ.title}
-        </h2>
-        <dl className="list-plain mt-8">
-          {FAQ.items.map((item) => (
-            <div key={item.q} className="py-5">
-              <dt className="font-semibold text-[var(--fg)]">{item.q}</dt>
-              <dd className="mt-2 text-[16px] leading-relaxed text-[var(--dim)]">
-                {item.a}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <FaqBlock headingClassName="mt-16 scroll-mt-24 font-display text-2xl font-semibold tracking-tight" />
 
         <div className="mt-12 flex flex-wrap gap-3">
           <Link href="/zayavka" className="btn-primary focus-ring">

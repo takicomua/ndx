@@ -1,6 +1,5 @@
 import {
   AUDIENCE,
-  FAQ,
   SERVICES,
   SITE,
 } from "@/lib/constants";
@@ -152,18 +151,6 @@ export function JsonLd() {
             },
           })),
         },
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${SITE.url}/pro-mene#faq`,
-        mainEntity: FAQ.items.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.a,
-          },
-        })),
       },
       {
         "@type": "ItemList",

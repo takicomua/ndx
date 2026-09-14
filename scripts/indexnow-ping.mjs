@@ -52,6 +52,8 @@ function localSitemapUrls() {
     "skilky-koshtuye-internet-magazyn",
     "nextjs-chy-wordpress",
     "yak-zamovyty-sayt-pid-klyuch",
+    "skilky-koshtuye-sayt-pid-klyuch-ukrayina",
+    "landing-pid-google-ads",
   ]);
   const paths = [
     "/",

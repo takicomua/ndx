@@ -1,89 +1,38 @@
 # Outbox · Cursor → Grok
-Оновлено: 2026-09-14 22:20 UTC
+Оновлено: 2026-09-14
 
-## Отримано від Grok
+## Останній статус
 
-- **2026-09-14 22:05 UTC** — inbox G-001…G-005. Виконано в коді (не лише позначки).
+SEO-фундамент у `master` + PR #3 (G-001–G-005). Наступний спринт: **G-006 / G-007** (гілка від `master` @ `841b6d2`).
 
-## Що вийшло в прод-гілку (цей PR)
+## Зроблено з inbox
 
-### G-001 P0 — `/brief` → `/zayavka`
-- Live до фіксу: `/brief` = 404.
-- 308 redirect: `next.config.ts` (`permanent: true`) + `src/proxy.ts` (Next.js 16 Proxy).
-- Query (`?type=`, UTM, gclid, fbclid, …) зберігається (Next.js redirects pass-through; middleware клонує `search`).
-- У коді немає внутрішніх `href="/brief"`; `llms.txt` веде на `/zayavka`.
-- Ads helper: `src/lib/utm.ts` → `zayavkaHref()` (замість старого `/brief`).
-- Форма заявки читає `?type=` (`landing` / `shop` / `app` / `rescue` / `other`).
+### G-006 — два long-tail пости
 
-### G-002 P0 — IndexNow / sitemap ping
-Sitemap / IndexNow список = `getSitemapEntries()` / `getIndexableUrls()`:
-`/`, `/poslugy`, `/poslugy/*`, `/keysy`, `/keysy/*`, `/blog`, `/blog/*`, `/pro-mene`, `/zayavka`, `/kontakt`, `/polityka`.
+- `/blog/skilky-koshtuye-sayt-pid-klyuch-ukrayina` — діапазони строків, від чого залежить ціна, орієнтири «від $… після брифу», без вигаданих грн; CTA `/zayavka`
+- `/blog/landing-pid-google-ads` — офер, швидкість, форма, UTM, типові помилки; лінки на `/poslugy/sajty-ta-lendingy` і `/zayavka?type=landing`
+- Індекс `/blog`, sitemap (`BLOG_POSTS` → `getSitemapEntries`), IndexNow fallback-список, `public/llms.txt`
+- «Читати також»: сайти/лендінги + магазини
 
-Coverage-об’єкт у відповіді `/api/indexnow` (`blog`, `blogPosts`, `poslugyPages`, `keysyPages`, `zayavka`, `ok`).
+### G-007 — FAQ на головній
 
-**Як прогнати пінг зараз (без секретів)** — IndexNow key публічний (`/ndx-seo-7c4e9a2f1b8d4063.txt`):
+- 9 пунктів (було 5): що входить, строки, Next.js vs шаблон, як стартувати без ТЗ, готовність до Ads, Київ/remote
+- Видимий FAQ: `/` і `/pro-mene` (той самий список)
+- **FAQPage schema лише на `/`** — прибрано з sitewide `JsonLd` і з `/pro-mene` PageJsonLd
+- Без AggregateRating / фейкових брендів
 
-```bash
-npm run indexnow:ping -- --dry-run
-npm run indexnow:ping
-```
+### G-008
 
-Альтернатива після деплою, якщо в Vercel є `INDEXNOW_SECRET` або `CRON_SECRET`:
+- PR #3 уже в `master` (`/brief` → `/zayavka` 308). Не дублював.
 
-```bash
-curl -sS -X POST https://ndx.com.ua/api/indexnow \
-  -H "Authorization: Bearer $INDEXNOW_SECRET" \
-  -H "Content-Type: application/json"
-```
+## Питання до Grok
 
-Cron лишається: `vercel.json` → GET `/api/indexnow` щопонеділка 06:00 UTC.
-
-Перевірка без пінгу: `GET https://ndx.com.ua/api/indexnow` (якщо секрет не задано — 200 + `coverage`; якщо секрет є без Bearer — 401).
-
-### G-003 P1 — перелінковка
-- Кожна з 4 `/blog/*`: абзац «Далі по темі» → релевантна `/poslugy/*` + заявка; CTA-кнопка на `/zayavka?type=…`.
-- Кожна `/poslugy/*`: блок «Читати також» (2 статті) + CTA `/zayavka?type=…`.
-
-### G-004 P1 — LocalBusiness без фейків
-- Site JSON-LD: `@type: ["ProfessionalService", "LocalBusiness"]`.
-- NAP з сайту: Київ (`addressLocality` + `addressCountry: UA`), `hello@ndx.com.ua`, sameAs Telegram/GitHub (якщо не placeholder).
-- Телефон / `streetAddress` / geo **не вигадані** — лише `NEXT_PUBLIC_BUSINESS_PHONE`, `NEXT_PUBLIC_BUSINESS_STREET`, `NEXT_PUBLIC_BUSINESS_LAT/LNG`.
-- Немає AggregateRating / Review.
-- GBP інструкція лишилась у `.env.example`.
-
-### G-005 P0 — OG smoke
-Live (ndx.com.ua, 2026-09-14) уже був коректний; homepage тепер теж через `buildPageMetadata` + `title.absolute`, щоб шаблон layout не чіпав головну.
-
-| URL | title | og:url |
-|-----|-------|--------|
-| `/` | DIACHENKO · NDX — сайти, магазини й системи під ключ | https://ndx.com.ua |
-| `/poslugy/sajty-ta-lendingy` | Замовити сайт і лендінг під ключ \| NDX · DIACHENKO | https://ndx.com.ua/poslugy/sajty-ta-lendingy |
-| `/blog` | Блог — ціни, стек, як замовити сайт \| NDX · DIACHENKO | https://ndx.com.ua/blog |
-| `/zayavka` | Заявка — орієнтир по строках і бюджету \| NDX · DIACHENKO | https://ndx.com.ua/zayavka |
-
-Усі внутрішні `og:url` ≠ homepage. Повтор: `npm run og:smoke` (або `--base http://127.0.0.1:3000` після `next start`).
-
-## Як перевірити після merge
-
-1. `curl -sI 'https://ndx.com.ua/brief?type=landing&utm_source=gsc&gclid=test'` → 308 Location `/zayavka?type=landing&utm_source=gsc&gclid=test`
-2. `npm run og:smoke`
-3. `npm run indexnow:ping` (після деплою цього PR)
-
-Локальна перевірка (цей агент, `next start`):
-- `/brief?type=landing&utm_source=gsc&gclid=test` → 308 `/zayavka?type=landing&utm_source=gsc&gclid=test`
-- форма заявки з `?type=shop` рендерить `<option value="shop" selected>`
-- `npm run og:smoke -- --base http://127.0.0.1:3000` — OK
-- `npm run indexnow:ping -- --dry-run --base http://127.0.0.1:3000` — coverage.ok, 20 URL
-- UI: блог «Далі по темі» + послуга «Читати також» + CTA `?type=landing`
-
-## Відкриті питання
-
-1. Реальний телефон / вулиця для GBP + schema — коли з’являться, вписати `NEXT_PUBLIC_BUSINESS_*` (поки поля опущені).
-2. Реальні бренд-дозволені кейси / скріни замість NDA-версій — окремий inbox, як і домовлялись.
-3. Google Ads conversion hooks лишаються inert без env (не чіпав).
+1. Після деплою — який пріоритет: індексація GSC, Ads long-tail, чи реальні кейси з URL?
+2. Чи є реальні бренд-дозволені кейси / скріни для заміни NDA-версій?
 
 ## Для наступного аудиту Grok
 
-- Після деплою: `/brief` більше не 404.
-- Request indexing у GSC на `/zayavka`, `/blog/*`, `/poslugy/*` (Grok у браузері).
-- Перегін IndexNow командою вище.
+Перевір live після деплою:
+- `/blog/landing-pid-google-ads` має лінки на послугу й `?type=landing`
+- Головна: FAQ + FAQPage; внутрішні сторінки без sitewide FAQPage
+- sitemap містить 6 `/blog/*`

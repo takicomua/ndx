@@ -17,6 +17,8 @@
 
 ## Blog
 - [Landing page cost in Ukraine](https://ndx.com.ua/blog/skilky-koshtuye-lending-ukrayina)
+- [Turnkey site cost in Ukraine](https://ndx.com.ua/blog/skilky-koshtuye-sayt-pid-klyuch-ukrayina)
+- [Landing page for Google Ads](https://ndx.com.ua/blog/landing-pid-google-ads)
 - [E-commerce cost](https://ndx.com.ua/blog/skilky-koshtuye-internet-magazyn)
 - [Next.js vs WordPress](https://ndx.com.ua/blog/nextjs-chy-wordpress)
 - [How to order a turnkey site](https://ndx.com.ua/blog/yak-zamovyty-sayt-pid-klyuch)

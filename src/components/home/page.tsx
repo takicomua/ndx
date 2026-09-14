@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { FaqPageJsonLd } from "@/components/seo/page-json-ld";
+import { FaqBlock } from "@/components/site/faq-block";
 import { SiteChrome } from "@/components/site/chrome";
-import { CONTACT, HERO, SERVICES, SITE } from "@/lib/constants";
+import { CONTACT, FAQ, HERO, SERVICES, SITE } from "@/lib/constants";
 import { CASE_PAGES } from "@/lib/content/cases";
 
 export function HomePage() {
@@ -8,6 +10,7 @@ export function HomePage() {
 
   return (
     <SiteChrome active="home" flush>
+      <FaqPageJsonLd items={FAQ.items} />
       <section className="border-b border-[var(--line)] bg-[var(--ink)] text-[var(--ink-fg)]">
         <div className="mx-auto max-w-3xl px-5 py-24 sm:px-8 sm:py-32">
           <p className="text-sm text-[var(--ink-dim)]">
@@ -105,6 +108,13 @@ export function HomePage() {
           >
             Усі роботи
           </Link>
+        </section>
+
+        <section className="border-t border-[var(--line)] py-20 sm:py-24">
+          <p className="text-sm font-medium text-[var(--accent)]">
+            {FAQ.eyebrow}
+          </p>
+          <FaqBlock headingClassName="mt-2 scroll-mt-24 font-display text-3xl font-semibold tracking-tight sm:text-4xl" />
         </section>
 
         <section className="border-t border-[var(--line)] py-20 sm:py-24">

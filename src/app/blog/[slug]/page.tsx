@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
@@ -8,6 +9,43 @@ import { getServiceBySlug } from "@/lib/content/services";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const LINK_CLASS =
+  "font-semibold text-[var(--accent)] underline-offset-2 hover:underline focus-ring";
+
+function RichParagraph({ text }: { text: string }) {
+  const nodes: ReactNode[] = [];
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+  let last = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = re.exec(text))) {
+    if (match.index > last) {
+      nodes.push(text.slice(last, match.index));
+    }
+    const label = match[1];
+    const href = match[2];
+    nodes.push(
+      href.startsWith("/") ? (
+        <Link key={key++} href={href} className={LINK_CLASS}>
+          {label}
+        </Link>
+      ) : (
+        <a
+          key={key++}
+          href={href}
+          className={LINK_CLASS}
+          rel="noopener noreferrer"
+        >
+          {label}
+        </a>
+      ),
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return <p>{nodes}</p>;
+}
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }));
@@ -70,7 +108,7 @@ export default async function BlogPostPage({ params }: Props) {
             <h2 className="font-display text-2xl font-semibold">{section.h}</h2>
             <div className="mt-4 space-y-3 text-[16px] leading-relaxed text-[var(--dim)]">
               {section.p.map((para) => (
-                <p key={para}>{para}</p>
+                <RichParagraph key={para} text={para} />
               ))}
             </div>
           </section>
