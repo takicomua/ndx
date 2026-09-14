@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
-import { SITE } from "@/lib/constants";
+import { getCaseBySlug } from "@/lib/content/cases";
 import { getServiceBySlug, SERVICE_PAGES } from "@/lib/content/services";
+import { buildPageMetadata } from "@/lib/page-meta";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -16,12 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = getServiceBySlug(slug);
   if (!page) return {};
-  const url = `${SITE.url}/poslugy/${page.slug}`;
-  return {
+  return buildPageMetadata({
     title: page.title,
     description: page.description,
-    alternates: { canonical: url },
-  };
+    path: `/poslugy/${page.slug}`,
+  });
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -29,6 +29,9 @@ export default async function ServicePage({ params }: Props) {
   const page = getServiceBySlug(slug);
   if (!page) notFound();
   const path = `/poslugy/${page.slug}`;
+  const relatedCases = page.relatedCaseSlugs
+    .map((s) => getCaseBySlug(s))
+    .filter(Boolean);
 
   return (
     <SiteChrome active="poslugy">
@@ -43,6 +46,11 @@ export default async function ServicePage({ params }: Props) {
           { name: page.shortTitle, path },
         ]}
         faq={page.faq}
+        offers={page.pricing.ranges.map((r) => ({
+          name: r.name,
+          price: r.price,
+          description: r.time,
+        }))}
       />
 
       <article className="mx-auto max-w-3xl py-16 sm:py-20">
@@ -59,6 +67,51 @@ export default async function ServicePage({ params }: Props) {
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
           {page.lead}
         </p>
+
+        <div className="mt-8 space-y-4 text-[16px] leading-relaxed text-[var(--dim)]">
+          {page.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+
+        <h2 className="mt-14 font-display text-2xl font-semibold">Кому підходить</h2>
+        <ul className="mt-5 space-y-2 text-[16px] text-[var(--dim)]">
+          {page.forWhom.map((item) => (
+            <li key={item}>• {item}</li>
+          ))}
+        </ul>
+
+        <h2 className="mt-14 font-display text-2xl font-semibold">Що входить</h2>
+        <ul className="mt-5 space-y-2 text-[16px] text-[var(--dim)]">
+          {page.includes.map((item) => (
+            <li key={item}>• {item}</li>
+          ))}
+        </ul>
+        <p className="mt-4 text-sm text-[var(--dim)]">
+          Зазвичай не входить: {page.notIncludes.join("; ").toLowerCase()}.
+        </p>
+
+        <h2 className="mt-14 font-display text-2xl font-semibold">
+          {page.pricing.label} цін і строків
+        </h2>
+        <p className="mt-3 text-[16px] leading-relaxed text-[var(--dim)]">
+          {page.pricing.note}
+        </p>
+        <ul className="mt-6 space-y-4">
+          {page.pricing.ranges.map((r) => (
+            <li
+              key={r.name}
+              className="border-b border-[var(--line)] pb-4 last:border-0"
+            >
+              <p className="font-semibold text-[var(--fg)]">{r.name}</p>
+              <p className="mt-1 text-[16px] text-[var(--dim)]">
+                {r.price}
+                <span className="mx-2 text-[var(--line)]">·</span>
+                {r.time}
+              </p>
+            </li>
+          ))}
+        </ul>
 
         <h2 className="mt-14 font-display text-2xl font-semibold">Що отримаєте</h2>
         <ul className="mt-5 space-y-2 text-[16px] text-[var(--dim)]">
@@ -80,6 +133,27 @@ export default async function ServicePage({ params }: Props) {
           ))}
         </ol>
 
+        {relatedCases.length ? (
+          <>
+            <h2 className="mt-14 font-display text-2xl font-semibold">Приклади робіт</h2>
+            <ul className="mt-5 space-y-3">
+              {relatedCases.map((c) =>
+                c ? (
+                  <li key={c.slug}>
+                    <Link
+                      href={`/keysy/${c.slug}`}
+                      className="font-semibold text-[var(--accent)] focus-ring"
+                    >
+                      {c.h1} →
+                    </Link>
+                    <p className="mt-1 text-sm text-[var(--dim)]">{c.lead}</p>
+                  </li>
+                ) : null,
+              )}
+            </ul>
+          </>
+        ) : null}
+
         <h2 className="mt-14 font-display text-2xl font-semibold">Питання</h2>
         <dl className="list-plain mt-5">
           {page.faq.map((item) => (
@@ -92,7 +166,7 @@ export default async function ServicePage({ params }: Props) {
 
         <div className="mt-12 flex flex-wrap items-center gap-4">
           <Link href="/zayavka" className="btn-primary focus-ring">
-            Заявка
+            Заявка / орієнтир
           </Link>
           <Link href="/poslugy" className="text-sm font-semibold focus-ring">
             ← Усі послуги

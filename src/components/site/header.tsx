@@ -9,6 +9,7 @@ function isActive(active: NavActive | undefined, href: string) {
   if (!active) return false;
   if (href === "/poslugy") return active === "poslugy";
   if (href === "/keysy") return active === "keysy";
+  if (href === "/blog") return active === "blog";
   if (href === "/pro-mene") return active === "pro-mene";
   if (href === "/kontakt") return active === "kontakt";
   return false;

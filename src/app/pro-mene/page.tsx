@@ -3,12 +3,13 @@ import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
 import { ABOUT, FAQ, SITE } from "@/lib/constants";
+import { buildPageMetadata } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Про мене",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Про мене — DIACHENKO · NDX",
   description: ABOUT.lead,
-  alternates: { canonical: `${SITE.url}/pro-mene` },
-};
+  path: "/pro-mene",
+});
 
 export default function AboutPage() {
   return (

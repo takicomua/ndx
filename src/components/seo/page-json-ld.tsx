@@ -2,6 +2,7 @@ import { absoluteUrl, getPublicEmail, getSameAs } from "@/lib/seo-helpers";
 import { SITE } from "@/lib/constants";
 
 type Breadcrumb = { name: string; path: string };
+type Offer = { name: string; price: string; description?: string };
 
 export function PageJsonLd({
   type,
@@ -10,13 +11,23 @@ export function PageJsonLd({
   path,
   breadcrumbs,
   faq,
+  offers,
+  datePublished,
 }: {
-  type: "Service" | "Article" | "CollectionPage" | "WebPage" | "AboutPage" | "ContactPage";
+  type:
+    | "Service"
+    | "Article"
+    | "CollectionPage"
+    | "WebPage"
+    | "AboutPage"
+    | "ContactPage";
   name: string;
   description: string;
   path: string;
   breadcrumbs: Breadcrumb[];
   faq?: readonly { q: string; a: string }[];
+  offers?: Offer[];
+  datePublished?: string;
 }) {
   const url = absoluteUrl(path);
   const sameAs = getSameAs();
@@ -56,7 +67,22 @@ export function PageJsonLd({
         ...(email ? { email } : {}),
         ...(sameAs.length ? { sameAs } : {}),
       },
-      areaServed: { "@type": "Country", name: "Ukraine" },
+      areaServed: [
+        { "@type": "Country", name: "Ukraine" },
+        { "@type": "City", name: "Kyiv" },
+      ],
+      ...(offers?.length
+        ? {
+            offers: offers.map((o) => ({
+              "@type": "Offer",
+              name: o.name,
+              description: o.description || o.price,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              url,
+            })),
+          }
+        : {}),
     });
   }
 
@@ -67,8 +93,12 @@ export function PageJsonLd({
       description,
       url,
       inLanguage: "uk-UA",
+      ...(datePublished
+        ? { datePublished, dateModified: datePublished }
+        : {}),
       author: { "@type": "Person", name: SITE.brand, url: SITE.url },
       publisher: { "@id": `${SITE.url}/#organization` },
+      mainEntityOfPage: { "@id": `${url}#webpage` },
     });
   }
 

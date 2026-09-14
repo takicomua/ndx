@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
-import { SITE } from "@/lib/constants";
 import { SERVICE_PAGES } from "@/lib/content/services";
+import { buildPageMetadata } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Послуги",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Послуги — сайти, магазини, кабінети",
   description:
-    "Сайти, лендінги, інтернет-магазини, кабінети й доробка проєктів. NDX · DIACHENKO · Україна.",
-  alternates: { canonical: `${SITE.url}/poslugy` },
-};
+    "Замовити сайт, лендінг, інтернет-магазин або кабінет під ключ. Орієнтири цін і строків · NDX · DIACHENKO · Україна.",
+  path: "/poslugy",
+});
 
 export default function ServicesIndexPage() {
   return (
@@ -18,7 +18,7 @@ export default function ServicesIndexPage() {
       <PageJsonLd
         type="CollectionPage"
         name="Послуги NDX"
-        description="Сайти, магазини, кабінети, доробка проєктів."
+        description="Сайти, лендінги, інтернет-магазини, кабінети, доробка проєктів — з орієнтирами цін."
         path="/poslugy"
         breadcrumbs={[
           { name: "NDX", path: "/" },
@@ -31,8 +31,8 @@ export default function ServicesIndexPage() {
           Послуги
         </h1>
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
-          Оберіть напрям. На сторінці — що входить, як працюю і відповіді на
-          типові питання.
+          Чотири напрями з орієнтирами цін і строків. Оберіть сторінку — там
+          обсяг, процес і відповіді на типові комерційні запити.
         </p>
 
         <ul className="list-plain mt-12">
@@ -44,6 +44,11 @@ export default function ServicesIndexPage() {
                 </h2>
                 <p className="mt-2 text-[16px] leading-relaxed text-[var(--dim)]">
                   {item.lead}
+                </p>
+                <p className="mt-2 text-sm text-[var(--fg)]">
+                  {item.pricing.ranges[0]?.price}
+                  <span className="mx-2 text-[var(--dim)]">·</span>
+                  {item.pricing.ranges[0]?.time}
                 </p>
                 <span className="mt-3 inline-block text-sm font-semibold text-[var(--accent)]">
                   Відкрити →

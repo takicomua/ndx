@@ -13,12 +13,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/poslugy", "/keysy", "/.well-known/", "/llms.txt"],
+        allow: ["/", "/poslugy", "/keysy", "/blog", "/.well-known/", "/llms.txt"],
         disallow: ["/api/"],
       },
       {
         userAgent: "Googlebot",
-        allow: ["/", "/poslugy", "/keysy"],
+        allow: ["/", "/poslugy", "/keysy", "/blog"],
         disallow: ["/api/"],
       },
       {

@@ -1,4 +1,5 @@
 import { CASE_PAGES } from "@/lib/content/cases";
+import { BLOG_POSTS } from "@/lib/content/blog";
 import { SERVICE_PAGES } from "@/lib/content/services";
 import { SITE } from "@/lib/constants";
 
@@ -29,6 +30,12 @@ export function getSitemapEntries(): SitemapEntry[] {
     ...CASE_PAGES.map((c) => ({
       path: `/keysy/${c.slug}`,
       priority: 0.75,
+      changeFrequency: "monthly" as const,
+    })),
+    { path: "/blog", priority: 0.85, changeFrequency: "weekly" },
+    ...BLOG_POSTS.map((p) => ({
+      path: `/blog/${p.slug}`,
+      priority: 0.7,
       changeFrequency: "monthly" as const,
     })),
     { path: "/pro-mene", priority: 0.8, changeFrequency: "monthly" },

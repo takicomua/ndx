@@ -74,10 +74,10 @@ export function HomePage() {
         <section className="border-t border-[var(--line)] py-20 sm:py-24">
           <p className="text-sm font-medium text-[var(--accent)]">Роботи</p>
           <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Приклади задач
+            Кейси
           </h2>
           <p className="mt-3 text-[17px] leading-relaxed text-[var(--dim)]">
-            Як виглядає типова робота: задача, що зробив, що на виході.
+            Ніша, стек, докази результату. Бренди клієнтів — за NDA.
           </p>
 
           <ul className="list-plain mt-12">

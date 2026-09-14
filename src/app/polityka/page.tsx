@@ -3,12 +3,13 @@ import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
 import { CONTACTS, SITE } from "@/lib/constants";
+import { buildPageMetadata } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Політика конфіденційності",
   description: "Як обробляю дані із заявок на ndx.com.ua.",
-  alternates: { canonical: `${SITE.url}/polityka` },
-};
+  path: "/polityka",
+});
 
 export default function PrivacyPage() {
   return (

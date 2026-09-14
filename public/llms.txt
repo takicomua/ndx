@@ -1,10 +1,13 @@
 # NDX · DIACHENKO
-> Full-cycle engineer (Ukraine / Kyiv / remote): sites, landing pages, e-commerce, web systems, project rescue. Brand: NDX. Domain: ndx.com.ua. Tagline: IDEA → LIVE.
+> Full-cycle engineer (Ukraine / Kyiv / remote): sites, landing pages, e-commerce, web systems, project rescue. Brand: NDX. Domain: ndx.com.ua. Tagline: від ідеї до запуску.
 
 ## Primary
-- [Home](https://ndx.com.ua/): Portfolio + brief form
-- [Services](https://ndx.com.ua/poslugy): Service index
-- [Cases / approaches](https://ndx.com.ua/keysy): Typical delivery contours
+- [Home](https://ndx.com.ua/): Brand + services overview
+- [Services](https://ndx.com.ua/poslugy): Service index with price ranges
+- [Cases](https://ndx.com.ua/keysy): Anonymized real-work cases (NDA)
+- [Blog](https://ndx.com.ua/blog): Long-tail guides (pricing, stack, how to order)
+- [Brief / lead](https://ndx.com.ua/zayavka): Request estimate
+- [Contact](https://ndx.com.ua/kontakt): NAP + Telegram / email
 
 ## Services
 - [Sites & landings](https://ndx.com.ua/poslugy/sajty-ta-lendingy)
@@ -12,6 +15,12 @@
 - [Web systems & cabinets](https://ndx.com.ua/poslugy/veb-systemy-ta-kabinety)
 - [Project rescue](https://ndx.com.ua/poslugy/poryatunok-proektu)
 
+## Blog
+- [Landing page cost in Ukraine](https://ndx.com.ua/blog/skilky-koshtuye-lending-ukrayina)
+- [E-commerce cost](https://ndx.com.ua/blog/skilky-koshtuye-internet-magazyn)
+- [Next.js vs WordPress](https://ndx.com.ua/blog/nextjs-chy-wordpress)
+- [How to order a turnkey site](https://ndx.com.ua/blog/yak-zamovyty-sayt-pid-klyuch)
+
 ## Contact
-- Brief form: https://ndx.com.ua/#brief
+- Email / Telegram: see https://ndx.com.ua/kontakt
 - Sitemap: https://ndx.com.ua/sitemap.xml

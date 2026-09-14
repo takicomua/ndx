@@ -3,14 +3,14 @@ import Link from "next/link";
 import { LeadForm } from "@/components/lead/lead-form";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
-import { SITE } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
+import { buildPageMetadata } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
-  title: "Заявка",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Заявка — орієнтир по строках і бюджету",
   description: LEAD.lead,
-  alternates: { canonical: `${SITE.url}/zayavka` },
-};
+  path: "/zayavka",
+});
 
 export default function LeadPage() {
   return (

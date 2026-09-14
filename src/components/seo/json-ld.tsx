@@ -107,7 +107,7 @@ export function JsonLd() {
         image: `${SITE.url}/opengraph-image`,
         url: SITE.url,
         description: SERVICES.lead,
-        priceRange: "$$",
+        priceRange: "$400–$8000+",
         areaServed: [
           { "@type": "Country", name: "Ukraine" },
           { "@type": "City", name: "Kyiv" },
@@ -115,6 +115,11 @@ export function JsonLd() {
         availableLanguage: ["uk", "en"],
         provider: { "@id": personId },
         brand: { "@id": orgId },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Kyiv",
+          addressCountry: "UA",
+        },
         serviceType: SERVICES.items.map((i) => i.title),
         hasOfferCatalog: {
           "@type": "OfferCatalog",

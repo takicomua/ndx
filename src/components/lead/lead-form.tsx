@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { trackLeadSubmit } from "@/lib/analytics";
 import { CONTACTS } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
 
@@ -42,6 +43,7 @@ export function LeadForm() {
         setError(data.error || "Не вдалося надіслати. Спробуйте ще раз.");
         return;
       }
+      trackLeadSubmit({ type, budget, timeline });
       setStatus("ok");
       e.currentTarget.reset();
     } catch {

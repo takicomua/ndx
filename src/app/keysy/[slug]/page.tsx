@@ -3,9 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
-import { SITE } from "@/lib/constants";
 import { CASE_PAGES, getCaseBySlug } from "@/lib/content/cases";
 import { getServiceBySlug } from "@/lib/content/services";
+import { buildPageMetadata } from "@/lib/page-meta";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,11 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = getCaseBySlug(slug);
   if (!page) return {};
-  return {
+  return buildPageMetadata({
     title: page.title,
     description: page.description,
-    alternates: { canonical: `${SITE.url}/keysy/${page.slug}` },
-  };
+    path: `/keysy/${page.slug}`,
+    type: "article",
+  });
 }
 
 export default async function CasePage({ params }: Props) {
@@ -53,16 +54,30 @@ export default async function CasePage({ params }: Props) {
           </Link>
           <span className="mx-2">/</span>
           {page.type}
+          <span className="mx-2">·</span>
+          {page.year}
         </p>
         <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight">
           {page.h1}
         </h1>
+        <p className="mt-2 text-sm text-[var(--dim)]">
+          {page.niche}
+          {page.nda ? " · деталі клієнта за NDA" : null}
+        </p>
         <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
           {page.lead}
         </p>
-        <p className="mt-4 text-sm text-[var(--fg)]">
-          {page.metrics.join(" · ")}
-        </p>
+
+        <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+          {page.metrics.map((m) => (
+            <div key={m.label}>
+              <dt className="text-xs uppercase tracking-[0.12em] text-[var(--dim)]">
+                {m.label}
+              </dt>
+              <dd className="mt-1 font-semibold text-[var(--fg)]">{m.value}</dd>
+            </div>
+          ))}
+        </dl>
 
         <h2 className="mt-14 font-display text-2xl font-semibold">Задача</h2>
         <p className="mt-3 text-[16px] leading-relaxed text-[var(--dim)]">
@@ -83,18 +98,30 @@ export default async function CasePage({ params }: Props) {
           {page.result}
         </p>
 
+        <h2 className="mt-14 font-display text-2xl font-semibold">Докази / артефакти</h2>
+        <ul className="mt-4 space-y-2 text-[16px] text-[var(--dim)]">
+          {page.evidence.map((item) => (
+            <li key={item}>• {item}</li>
+          ))}
+        </ul>
+
+        <h2 className="mt-14 font-display text-2xl font-semibold">Стек</h2>
+        <p className="mt-3 text-[16px] text-[var(--dim)]">{page.stack.join(" · ")}</p>
+
         {related.length ? (
           <p className="mt-10 text-sm text-[var(--dim)]">
             Послуга:{" "}
-            {related.map((s) =>
+            {related.map((s, i) =>
               s ? (
-                <Link
-                  key={s.slug}
-                  href={`/poslugy/${s.slug}`}
-                  className="font-semibold text-[var(--accent)] focus-ring"
-                >
-                  {s.shortTitle}
-                </Link>
+                <span key={s.slug}>
+                  {i > 0 ? ", " : null}
+                  <Link
+                    href={`/poslugy/${s.slug}`}
+                    className="font-semibold text-[var(--accent)] focus-ring"
+                  >
+                    {s.shortTitle}
+                  </Link>
+                </span>
               ) : null,
             )}
           </p>
