@@ -7,7 +7,7 @@ import { ABOUT, FAQ, SITE } from "@/lib/constants";
 import { buildPageMetadata } from "@/lib/page-meta";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: `Про мене — ${SITE.brandLine}`,
+  title: "Про мене",
   description: ABOUT.lead,
   path: "/pro-mene",
 });
