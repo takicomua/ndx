@@ -42,7 +42,7 @@ export function HomePage() {
             {" — персональний бренд інженера повного циклу, "}
             <Link
               href="/blog/ndx-ne-nasdaq"
-              className="underline decoration-[var(--ink-line)] underline-offset-4 hover:text-[var(--ink-fg)] focus-ring"
+              className="whitespace-nowrap underline decoration-[var(--ink-line)] underline-offset-4 hover:text-[var(--ink-fg)] focus-ring"
             >
               не індекс Nasdaq
             </Link>
