@@ -17,6 +17,17 @@ export const SITE = {
   geo: "Україна · Київ · remote",
 } as const;
 
+/** Person entity for schema / E-E-A-T — visual brand stays DIACHENKO / NDX */
+export const PERSON = {
+  name: "Микола Дяченко",
+  givenName: "Микола",
+  familyName: "Дяченко",
+  jobTitle: "Інженер повного циклу",
+} as const;
+
+/** Bump when indexable copy or URL set changes (sitemap lastmod). */
+export const CONTENT_UPDATED = "2026-09-14";
+
 export const CONTACTS = {
   telegram: env("NEXT_PUBLIC_CONTACT_TELEGRAM", "https://t.me/"),
   github: env("NEXT_PUBLIC_CONTACT_GITHUB", "https://github.com/takicomua"),

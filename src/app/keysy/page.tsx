@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
+import { BriefLink } from "@/components/site/brief-link";
 import { SiteChrome } from "@/components/site/chrome";
-import { SITE } from "@/lib/constants";
 import { CASE_PAGES } from "@/lib/content/cases";
+import { pageMetadata } from "@/lib/page-meta";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Підходи та кейси",
   description:
-    "Як NDX збирає лендінги, магазини MVP і стабілізує проєкти до Live. Підходи повного циклу · Україна.",
-  alternates: { canonical: `${SITE.url}/keysy` },
-  openGraph: {
-    title: `Підходи та кейси | NDX · ${SITE.brand}`,
-    description:
-      "Практичні контури: лендінг під рекламу, магазин MVP, стабілізація проєкту.",
-    url: `${SITE.url}/keysy`,
-  },
-};
+    "Як NDX збирає лендінги під рекламу, магазини MVP, веб-кабінети й стабілізує проєкти до Live. Підходи повного циклу · Україна.",
+  path: "/keysy",
+});
 
 export default function CasesIndexPage() {
   return (
@@ -24,12 +19,16 @@ export default function CasesIndexPage() {
       <PageJsonLd
         type="CollectionPage"
         name="Підходи та кейси NDX"
-        description="Практичні контури роботи: лендінги, магазини MVP, стабілізація."
+        description="Практичні контури роботи: лендінги, магазини MVP, кабінети, стабілізація."
         path="/keysy"
         breadcrumbs={[
           { name: "NDX", path: "/" },
           { name: "Кейси", path: "/keysy" },
         ]}
+        itemList={CASE_PAGES.map((item) => ({
+          name: item.h1,
+          path: `/keysy/${item.slug}`,
+        }))}
       />
 
       <section className="border-b border-[var(--line)] py-16 sm:py-20">
@@ -40,8 +39,8 @@ export default function CasesIndexPage() {
           Підходи до типових задач
         </h1>
         <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-[var(--dim)]">
-          Не портфоліо-галерея, а робочі контури: як входжу в задачу й що
-          отримуєте на виході.
+          Не портфоліо-галерея й не вигадані відгуки — робочі контури: як
+          входжу в задачу й що отримуєте на виході.
         </p>
       </section>
 
@@ -71,6 +70,18 @@ export default function CasesIndexPage() {
           </li>
         ))}
       </ul>
+
+      <div className="flex flex-col gap-6 border-t border-[var(--line)] py-14 sm:flex-row sm:items-center sm:justify-between">
+        <Link
+          href="/poslugy"
+          className="font-mono text-[11px] tracking-[0.14em] text-[var(--dim)] transition-colors hover:text-[var(--accent)] focus-ring"
+        >
+          Усі послуги →
+        </Link>
+        <BriefLink className="inline-flex h-12 items-center bg-[var(--accent)] px-6 text-sm font-medium text-[var(--accent-fg)] transition-[filter] hover:brightness-110 focus-ring">
+          Залишити заявку
+        </BriefLink>
+      </div>
     </SiteChrome>
   );
 }

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { BriefLink } from "@/components/site/brief-link";
 import { SITE } from "@/lib/constants";
 
 const INNER_NAV = [
   { href: "/poslugy", label: "Scope" },
   { href: "/keysy", label: "Keys" },
-  { href: "/#brief", label: "Brief" },
+  { href: "/brief", label: "Brief" },
   { href: "/#faq", label: "FAQ" },
 ] as const;
 
@@ -14,7 +15,7 @@ export function SiteChrome({
   active,
 }: {
   children: ReactNode;
-  active?: "poslugy" | "keysy";
+  active?: "poslugy" | "keysy" | "brief";
 }) {
   const year = new Date().getFullYear();
 
@@ -41,7 +42,8 @@ export function SiteChrome({
             {INNER_NAV.map((item) => {
               const isActive =
                 (active === "poslugy" && item.href === "/poslugy") ||
-                (active === "keysy" && item.href === "/keysy");
+                (active === "keysy" && item.href === "/keysy") ||
+                (active === "brief" && item.href === "/brief");
               return (
                 <Link
                   key={item.href}
@@ -57,12 +59,9 @@ export function SiteChrome({
               );
             })}
           </nav>
-          <Link
-            href="/#brief"
-            className="font-mono text-[10px] tracking-[0.16em] text-[var(--fg)] transition-colors hover:text-[var(--accent)] focus-ring"
-          >
+          <BriefLink className="font-mono text-[10px] tracking-[0.16em] text-[var(--fg)] transition-colors hover:text-[var(--accent)] focus-ring">
             BRIEF →
-          </Link>
+          </BriefLink>
         </div>
       </header>
 
@@ -71,12 +70,22 @@ export function SiteChrome({
       </main>
 
       <footer className="mt-10 border-t border-[var(--line)]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-7 font-mono text-[10px] tracking-[0.12em] text-[var(--dim)] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-7 font-mono text-[10px] tracking-[0.12em] text-[var(--dim)] sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <span>
             © {year} {SITE.brand}
           </span>
+          <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Підвал">
+            <Link href="/poslugy" className="hover:text-[var(--accent)] focus-ring">
+              Послуги
+            </Link>
+            <Link href="/keysy" className="hover:text-[var(--accent)] focus-ring">
+              Кейси
+            </Link>
+            <Link href="/brief" className="hover:text-[var(--accent)] focus-ring">
+              Brief
+            </Link>
+          </nav>
           <span className="text-[var(--accent)]/70">{SITE.mark}</span>
-          <span>{SITE.tagline}</span>
         </div>
       </footer>
     </div>

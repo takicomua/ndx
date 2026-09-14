@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { CONTACTS, SITE } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
+import { TRACKING_PARAMS, type TrackingValues } from "@/lib/utm";
 
 export const runtime = "nodejs";
 
@@ -12,7 +13,41 @@ type LeadBody = {
   timeline?: string;
   message?: string;
   company?: string; // honeypot
+  page?: string;
+  referrer?: string;
+  tracking?: TrackingValues;
 };
+
+function sanitizePath(value: string | undefined) {
+  const v = (value || "").trim();
+  if (!v.startsWith("/") || v.length > 300) return "";
+  return v;
+}
+
+function sanitizeReferrer(value: string | undefined) {
+  const v = (value || "").trim();
+  if (!v || v.length > 300) return "";
+  try {
+    const url = new URL(v);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return "";
+    return url.toString();
+  } catch {
+    return "";
+  }
+}
+
+function sanitizeTracking(raw: TrackingValues | undefined): TrackingValues {
+  const out: TrackingValues = {};
+  if (!raw || typeof raw !== "object") return out;
+  for (const key of TRACKING_PARAMS) {
+    const value = raw[key];
+    if (typeof value === "string") {
+      const v = value.trim();
+      if (v && v.length <= 200) out[key] = v;
+    }
+  }
+  return out;
+}
 
 const RATE = new Map<string, number[]>();
 
@@ -142,6 +177,12 @@ export async function POST(request: Request) {
   const type = labelOf(LEAD.types, body.type);
   const budget = labelOf(LEAD.budgets, body.budget);
   const timeline = labelOf(LEAD.timelines, body.timeline);
+  const page = sanitizePath(body.page);
+  const referrer = sanitizeReferrer(body.referrer);
+  const tracking = sanitizeTracking(body.tracking);
+  const trackingLine = Object.entries(tracking)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(" ");
 
   const text = [
     `NDX lead · ${SITE.domain}`,
@@ -152,10 +193,15 @@ export async function POST(request: Request) {
     `Бюджет: ${budget}`,
     `Строки: ${timeline}`,
     message ? `Задача:\n${message}` : `Задача: —`,
+    page ? `Сторінка: ${page}` : null,
+    referrer ? `Referrer: ${referrer}` : null,
+    trackingLine ? `UTM: ${trackingLine}` : null,
     ``,
     `IP: ${ip}`,
     `At: ${new Date().toISOString()}`,
-  ].join("\n");
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
 
   const tg = await sendTelegram(text);
   const mail = await sendResend(`[NDX] Заявка — ${name} · ${type}`, text);

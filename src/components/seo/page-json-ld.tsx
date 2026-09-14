@@ -1,5 +1,5 @@
+import { PERSON, SITE } from "@/lib/constants";
 import { absoluteUrl, getPublicEmail, getSameAs } from "@/lib/seo-helpers";
-import { SITE } from "@/lib/constants";
 
 type Breadcrumb = { name: string; path: string };
 
@@ -10,13 +10,15 @@ export function PageJsonLd({
   path,
   breadcrumbs,
   faq,
+  itemList,
 }: {
-  type: "Service" | "Article" | "CollectionPage";
+  type: "Service" | "Article" | "CollectionPage" | "ContactPage";
   name: string;
   description: string;
   path: string;
   breadcrumbs: Breadcrumb[];
   faq?: readonly { q: string; a: string }[];
+  itemList?: readonly { name: string; path: string }[];
 }) {
   const url = absoluteUrl(path);
   const sameAs = getSameAs();
@@ -33,13 +35,17 @@ export function PageJsonLd({
       })),
     },
     {
-      "@type": "WebPage",
+      "@type": type === "ContactPage" ? "ContactPage" : "WebPage",
       "@id": `${url}#webpage`,
       url,
       name,
       description,
       isPartOf: { "@id": `${SITE.url}/#website` },
       inLanguage: "uk-UA",
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: `${SITE.url}/opengraph-image`,
+      },
     },
   ];
 
@@ -51,12 +57,17 @@ export function PageJsonLd({
       url,
       provider: {
         "@type": "Person",
-        name: SITE.brand,
+        "@id": `${SITE.url}/#person`,
+        name: PERSON.name,
         url: SITE.url,
         ...(email ? { email } : {}),
         ...(sameAs.length ? { sameAs } : {}),
       },
-      areaServed: { "@type": "Country", name: "Ukraine" },
+      areaServed: [
+        { "@type": "Country", name: "Ukraine" },
+        { "@type": "City", name: "Kyiv" },
+      ],
+      availableLanguage: ["uk", "en"],
     });
   }
 
@@ -67,8 +78,26 @@ export function PageJsonLd({
       description,
       url,
       inLanguage: "uk-UA",
-      author: { "@type": "Person", name: SITE.brand, url: SITE.url },
+      author: {
+        "@type": "Person",
+        "@id": `${SITE.url}/#person`,
+        name: PERSON.name,
+        url: SITE.url,
+      },
       publisher: { "@id": `${SITE.url}/#organization` },
+      image: `${SITE.url}/opengraph-image`,
+    });
+  }
+
+  if (type === "CollectionPage" && itemList?.length) {
+    graph.push({
+      "@type": "ItemList",
+      itemListElement: itemList.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        url: absoluteUrl(item.path),
+      })),
     });
   }
 

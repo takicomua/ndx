@@ -24,6 +24,21 @@ export const SEO = {
   gaId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "",
   /** Google Tag Manager container, e.g. GTM-XXXXXXX */
   gtmId: process.env.NEXT_PUBLIC_GTM_ID?.trim() || "",
+  /** Google Ads conversion ID, e.g. AW-123456789 */
+  googleAdsId: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || "",
+  /**
+   * Conversion *label* only (not the AW- id).
+   * Combined as AW-XXXX/LABEL for gtag `send_to`.
+   */
+  googleAdsConversionLabel:
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL?.trim() || "",
+  /** Full send_to override, e.g. AW-123456789/AbCdEfGhIjk */
+  googleAdsSendTo: process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO?.trim() || "",
+  /**
+   * Optional Meta Pixel (secondary). Prefer GTM if you already load Meta there.
+   * Numeric pixel id only.
+   */
+  metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "",
   /** Force noindex when "1" */
   noIndex: process.env.NEXT_PUBLIC_NOINDEX === "1",
 } as const;
@@ -34,6 +49,33 @@ export function hasGoogleAnalytics() {
 
 export function hasGtm() {
   return Boolean(SEO.gtmId && SEO.gtmId.startsWith("GTM-"));
+}
+
+export function hasGoogleAds() {
+  return /^AW-\d+$/.test(SEO.googleAdsId);
+}
+
+export function googleAdsSendTo(): string {
+  const explicit = SEO.googleAdsSendTo;
+  if (explicit && /^AW-\d+\/[\w.-]+$/.test(explicit)) return explicit;
+  const id = SEO.googleAdsId;
+  const label = SEO.googleAdsConversionLabel;
+  if (hasGoogleAds() && label && /^[\w.-]+$/.test(label)) {
+    return `${id}/${label}`;
+  }
+  return "";
+}
+
+export function hasMetaPixel() {
+  return /^\d{5,20}$/.test(SEO.metaPixelId);
+}
+
+/** Direct gtag.js (skip when GTM owns tags to avoid double-firing). */
+export function gtagBootstrapId(): string {
+  if (hasGtm()) return "";
+  if (hasGoogleAnalytics()) return SEO.gaId;
+  if (hasGoogleAds()) return SEO.googleAdsId;
+  return "";
 }
 
 export function googleVerificationHtmlPath() {

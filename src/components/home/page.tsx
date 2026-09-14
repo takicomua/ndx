@@ -5,8 +5,9 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BootScene } from "@/components/home/boot-scene";
 import { BrandDecode } from "@/components/home/brand-decode";
-import { LeadForm } from "@/components/home/lead-form";
 import { PitchReveal } from "@/components/home/pitch-reveal";
+import { BriefPanel } from "@/components/brief/panel";
+import { CASE_PAGES } from "@/lib/content/cases";
 import {
   CONTACT,
   CONTACTS,
@@ -16,7 +17,6 @@ import {
   SERVICES,
   SITE,
 } from "@/lib/constants";
-import { LEAD } from "@/lib/lead";
 import { cn } from "@/lib/utils";
 
 const HeroCore = dynamic(
@@ -201,64 +201,56 @@ export function HomePage({ skipIntro = false }: { skipIntro?: boolean }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-8">
+            <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               <Link
                 href="/poslugy"
                 className="font-mono text-[11px] tracking-[0.14em] text-[var(--dim)] transition-colors hover:text-[var(--accent)] focus-ring"
               >
                 Усі послуги →
               </Link>
+              <Link
+                href="/keysy"
+                className="font-mono text-[11px] tracking-[0.14em] text-[var(--dim)] transition-colors hover:text-[var(--accent)] focus-ring"
+              >
+                Типові підходи →
+              </Link>
             </p>
           </section>
 
-          <section
-            id="brief"
-            className="scroll-mt-24 border-t border-[var(--line)] py-20 sm:py-24"
-          >
-            <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-              <div>
-                <SectionLabel>{LEAD.eyebrow}</SectionLabel>
-                <h2 className="mt-4 font-display text-[clamp(1.75rem,4vw,2.75rem)] font-medium tracking-tight text-[var(--fg)]">
-                  {LEAD.title}
-                </h2>
-                <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-[var(--dim)]">
-                  {LEAD.lead}
-                </p>
-
-                <div className="mt-10 flex gap-8 border-t border-[var(--line)] pt-8">
-                  {LEAD.steps.map((s) => (
-                    <div key={s.n}>
-                      <p className="font-mono text-[10px] tracking-[0.16em] text-[var(--accent)]">
-                        {s.n}
-                      </p>
-                      <p className="mt-2 text-sm font-medium text-[var(--fg)]">
-                        {s.t}
-                      </p>
-                      <p className="mt-1 font-mono text-[10px] text-[var(--dim)]">
-                        {s.d}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <ul className="mt-10 space-y-2.5">
-                  {LEAD.trust.map((t) => (
-                    <li
-                      key={t}
-                      className="flex gap-3 text-[13px] text-[var(--dim)]"
-                    >
-                      <span className="mt-[0.35em] h-px w-3 shrink-0 bg-[var(--accent)]/50" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="lead-panel min-w-0">
-                <LeadForm />
-              </div>
+          <section className="scroll-mt-24 border-t border-[var(--line)] py-20 sm:py-24">
+            <div className="max-w-2xl">
+              <SectionLabel>KEYS</SectionLabel>
+              <h2 className="mt-4 font-display text-[clamp(1.75rem,4vw,2.75rem)] font-medium tracking-tight text-[var(--fg)]">
+                Як входжу в типову задачу
+              </h2>
+              <p className="mt-4 text-[15px] leading-relaxed text-[var(--dim)]">
+                Робочі контури, не галерея відгуків: лендінг, магазин MVP,
+                кабінет, стабілізація.
+              </p>
             </div>
+            <ul className="mt-12">
+              {CASE_PAGES.map((item) => (
+                <li
+                  key={item.slug}
+                  className="border-t border-[var(--line)] py-6 last:border-b"
+                >
+                  <h3 className="font-display text-lg font-medium tracking-tight text-[var(--fg)] sm:text-xl">
+                    <Link
+                      href={`/keysy/${item.slug}`}
+                      className="transition-colors hover:text-[var(--accent)] focus-ring"
+                    >
+                      {item.h1}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--dim)]">
+                    {item.lead}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </section>
+
+          <BriefPanel />
 
           <section
             id="faq"
@@ -344,10 +336,22 @@ export function HomePage({ skipIntro = false }: { skipIntro?: boolean }) {
                 LinkedIn
               </a>
               <Link
+                href="/poslugy"
+                className="transition-colors hover:text-[var(--accent)] focus-ring"
+              >
+                Послуги
+              </Link>
+              <Link
                 href="/keysy"
                 className="transition-colors hover:text-[var(--accent)] focus-ring"
               >
                 Keys
+              </Link>
+              <Link
+                href="/brief"
+                className="transition-colors hover:text-[var(--accent)] focus-ring"
+              >
+                Brief
               </Link>
               <span className="text-[var(--fg)]/25">{SITE.domain}</span>
             </div>
@@ -359,8 +363,18 @@ export function HomePage({ skipIntro = false }: { skipIntro?: boolean }) {
             <span>
               © {year} {SITE.brand}
             </span>
+            <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Підвал">
+              <Link href="/poslugy" className="hover:text-[var(--accent)] focus-ring">
+                Послуги
+              </Link>
+              <Link href="/keysy" className="hover:text-[var(--accent)] focus-ring">
+                Кейси
+              </Link>
+              <Link href="/brief" className="hover:text-[var(--accent)] focus-ring">
+                Brief
+              </Link>
+            </nav>
             <span className="text-[var(--accent)]/70">{SITE.mark}</span>
-            <span>{SITE.tagline}</span>
           </div>
         </footer>
       </div>
