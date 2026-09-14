@@ -4,8 +4,9 @@ import { CANONICAL_HOST, securityHeaders } from "@/lib/security";
 
 /**
  * HTTPS + www→apex + security headers + Google HTML verification file.
+ * Next.js 16: Proxy replaces the deprecated middleware convention.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const gscPath = googleVerificationHtmlPath();
   if (gscPath && request.nextUrl.pathname === gscPath) {
     // Google expects: google-site-verification: googleXXXX.html

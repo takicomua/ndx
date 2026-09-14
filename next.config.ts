@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         destination: "/zayavka",
         permanent: true, // 308
       },
+      {
+        source: "/brief/",
+        destination: "/zayavka",
+        permanent: true,
+      },
     ];
   },
   async headers() {

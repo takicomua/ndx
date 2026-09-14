@@ -12,7 +12,19 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/zayavka",
 });
 
-export default function LeadPage() {
+type Props = { searchParams: Promise<{ type?: string | string[] }> };
+
+function typeFromSearch(raw: string | string[] | undefined) {
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  const t = value?.trim();
+  if (t && LEAD.types.some((item) => item.id === t)) return t;
+  return undefined;
+}
+
+export default async function LeadPage({ searchParams }: Props) {
+  const q = await searchParams;
+  const initialType = typeFromSearch(q.type);
+
   return (
     <SiteChrome active="zayavka">
       <PageJsonLd
@@ -53,7 +65,7 @@ export default function LeadPage() {
         </ul>
 
         <div className="lead-panel mt-12">
-          <LeadForm />
+          <LeadForm initialType={initialType} />
         </div>
 
         <p className="mt-8 text-sm text-[var(--dim)]">

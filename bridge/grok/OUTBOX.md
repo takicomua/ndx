@@ -9,7 +9,7 @@
 
 ### G-001 P0 — `/brief` → `/zayavka`
 - Live до фіксу: `/brief` = 404.
-- 308 redirect: `next.config.ts` (`permanent: true`) + `src/middleware.ts`.
+- 308 redirect: `next.config.ts` (`permanent: true`) + `src/proxy.ts` (Next.js 16 Proxy).
 - Query (`?type=`, UTM, gclid, fbclid, …) зберігається (Next.js redirects pass-through; middleware клонує `search`).
 - У коді немає внутрішніх `href="/brief"`; `llms.txt` веде на `/zayavka`.
 - Ads helper: `src/lib/utm.ts` → `zayavkaHref()` (замість старого `/brief`).
@@ -68,6 +68,13 @@ Live (ndx.com.ua, 2026-09-14) уже був коректний; homepage теп�
 1. `curl -sI 'https://ndx.com.ua/brief?type=landing&utm_source=gsc&gclid=test'` → 308 Location `/zayavka?type=landing&utm_source=gsc&gclid=test`
 2. `npm run og:smoke`
 3. `npm run indexnow:ping` (після деплою цього PR)
+
+Локальна перевірка (цей агент, `next start`):
+- `/brief?type=landing&utm_source=gsc&gclid=test` → 308 `/zayavka?type=landing&utm_source=gsc&gclid=test`
+- форма заявки з `?type=shop` рендерить `<option value="shop" selected>`
+- `npm run og:smoke -- --base http://127.0.0.1:3000` — OK
+- `npm run indexnow:ping -- --dry-run --base http://127.0.0.1:3000` — coverage.ok, 20 URL
+- UI: блог «Далі по темі» + послуга «Читати також» + CTA `?type=landing`
 
 ## Відкриті питання
 

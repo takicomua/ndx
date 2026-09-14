@@ -14,17 +14,25 @@ function typeFromQuery(search: URLSearchParams) {
   return LEAD.types[0].id;
 }
 
-export function LeadForm() {
+export function LeadForm({ initialType }: { initialType?: string }) {
   return (
-    <Suspense fallback={<LeadFormFields initialType={LEAD.types[0].id} />}>
-      <LeadFormFromQuery />
+    <Suspense
+      fallback={
+        <LeadFormFields
+          initialType={initialType || LEAD.types[0].id}
+        />
+      }
+    >
+      <LeadFormFromQuery initialType={initialType} />
     </Suspense>
   );
 }
 
-function LeadFormFromQuery() {
+function LeadFormFromQuery({ initialType }: { initialType?: string }) {
   const search = useSearchParams();
-  return <LeadFormFields initialType={typeFromQuery(search)} />;
+  return (
+    <LeadFormFields initialType={initialType || typeFromQuery(search)} />
+  );
 }
 
 function LeadFormFields({ initialType }: { initialType: string }) {

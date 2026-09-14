@@ -6,7 +6,7 @@
 ## Задачі
 
 - [x] **G-001** Редірект /brief → /zayavka (якщо /brief більше немає)
-  - Зроблено: 308 у `next.config.ts` + middleware; query (`?type=`, UTM, gclid) зберігається; внутрішніх лінків на `/brief` немає; форма читає `?type=`.
+  - Зроблено: 308 у `next.config.ts` + `src/proxy.ts`; query (`?type=`, UTM, gclid) зберігається; внутрішніх лінків на `/brief` немає; форма читає `?type=`.
   - Пріоритет: P0
 
 - [x] **G-002** Пінг індексації після деплою (IndexNow / sitemap)
