@@ -24,6 +24,10 @@ export function buildCsp(): string {
     "https://www.google-analytics.com",
     "https://www.google.com",
     "https://www.gstatic.com",
+    "https://www.googleadservices.com",
+    "https://googleads.g.doubleclick.net",
+    "https://pagead2.googlesyndication.com",
+    "https://connect.facebook.net",
   ];
 
   const connectSrc = [
@@ -33,6 +37,13 @@ export function buildCsp(): string {
     "https://www.googletagmanager.com",
     "https://analytics.google.com",
     "https://stats.g.doubleclick.net",
+    "https://www.google.com",
+    "https://www.google.com.ua",
+    "https://www.googleadservices.com",
+    "https://googleads.g.doubleclick.net",
+    "https://pagead2.googlesyndication.com",
+    "https://www.facebook.com",
+    "https://connect.facebook.net",
     ...(isDev ? ["ws:", "wss:", "http://localhost:*"] : []),
   ];
 
@@ -45,7 +56,7 @@ export function buildCsp(): string {
     `connect-src ${connectSrc.join(" ")}`,
     `worker-src 'self' blob:`,
     `child-src 'self' blob:`,
-    `frame-src 'self' https://www.googletagmanager.com https://www.google.com`,
+    `frame-src 'self' https://www.googletagmanager.com https://www.google.com https://www.facebook.com`,
     `media-src 'self'`,
     `object-src 'none'`,
     `base-uri 'self'`,

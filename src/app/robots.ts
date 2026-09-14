@@ -2,6 +2,18 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/constants";
 import { shouldNoIndex } from "@/lib/security";
 
+/** AI-training crawlers already blocked at Cloudflare; mirrored here on purpose. */
+const AI_TRAINING_AGENTS = [
+  "GPTBot",
+  "Google-Extended",
+  "ClaudeBot",
+  "CCBot",
+  "Bytespider",
+  "Amazonbot",
+  "Applebot-Extended",
+  "meta-externalagent",
+] as const;
+
 export default function robots(): MetadataRoute.Robots {
   if (shouldNoIndex()) {
     return {
@@ -13,12 +25,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/poslugy", "/keysy", "/.well-known/", "/llms.txt"],
+        allow: "/",
         disallow: ["/api/"],
       },
       {
         userAgent: "Googlebot",
-        allow: ["/", "/poslugy", "/keysy"],
+        allow: "/",
         disallow: ["/api/"],
       },
       {
@@ -28,6 +40,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "AdsBot-Google",
         allow: "/",
+      },
+      {
+        userAgent: [...AI_TRAINING_AGENTS],
+        disallow: "/",
       },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

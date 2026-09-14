@@ -1,18 +1,19 @@
 import {
-  AUDIENCE,
-  FAQ,
+  PERSON,
   SERVICES,
   SITE,
 } from "@/lib/constants";
 import { SERVICE_PAGES } from "@/lib/content/services";
 import { absoluteUrl, getPublicEmail, getSameAs } from "@/lib/seo-helpers";
 
-/** Structured data for Google rich results */
+/** Site-wide identity graph. Page-specific WebPage / FAQ live on those routes. */
 export function JsonLd() {
   const sameAs = getSameAs();
   const email = getPublicEmail();
   const orgId = `${SITE.url}/#organization`;
   const personId = `${SITE.url}/#person`;
+  const websiteId = `${SITE.url}/#website`;
+  const serviceId = `${SITE.url}/#service`;
 
   const graph = {
     "@context": "https://schema.org",
@@ -37,6 +38,7 @@ export function JsonLd() {
           { "@type": "City", name: "Kyiv" },
         ],
         sameAs,
+        founder: { "@id": personId },
         brand: {
           "@type": "Brand",
           name: "NDX",
@@ -45,7 +47,7 @@ export function JsonLd() {
       },
       {
         "@type": "WebSite",
-        "@id": `${SITE.url}/#website`,
+        "@id": websiteId,
         url: SITE.url,
         name: "NDX",
         alternateName: ["ndx", "DIACHENKO", SITE.domain],
@@ -53,46 +55,36 @@ export function JsonLd() {
         inLanguage: "uk-UA",
         publisher: { "@id": orgId },
         copyrightHolder: { "@id": personId },
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${SITE.url}/#webpage`,
-        url: SITE.url,
-        name: SITE.title,
-        description: SITE.description,
-        isPartOf: { "@id": `${SITE.url}/#website` },
-        about: { "@id": personId },
-        primaryImageOfPage: {
-          "@type": "ImageObject",
-          url: `${SITE.url}/opengraph-image`,
+        potentialAction: {
+          "@type": "ContactAction",
+          name: "Заявка на прорахунок",
+          target: absoluteUrl("/brief"),
         },
-        inLanguage: "uk-UA",
       },
       {
         "@type": "Person",
         "@id": personId,
-        name: SITE.brand,
-        alternateName: ["NDX", "ndx", "Diachenko"],
+        name: PERSON.name,
+        givenName: PERSON.givenName,
+        familyName: PERSON.familyName,
+        alternateName: ["NDX", "ndx", SITE.brand, "Diachenko"],
         url: SITE.url,
         image: `${SITE.url}/icon-512`,
-        jobTitle: "Інженер повного циклу",
+        jobTitle: PERSON.jobTitle,
         description: SITE.description,
         ...(email ? { email } : {}),
         worksFor: { "@id": orgId },
         sameAs,
+        knowsLanguage: ["uk", "en"],
         knowsAbout: [
-          "інженер повного циклу",
-          "full-cycle engineer",
           "розробка сайтів",
-          "інтернет-магазин",
-          "лендінг",
+          "лендінги під рекламу",
+          "інтернет-магазини",
+          "веб-кабінети",
           "веб-системи",
-          "IDEA → LIVE",
           "Next.js",
           "React",
           "TypeScript",
-          "Київ",
-          "Україна",
         ],
         address: {
           "@type": "PostalAddress",
@@ -102,12 +94,11 @@ export function JsonLd() {
       },
       {
         "@type": "ProfessionalService",
-        "@id": `${SITE.url}/#service`,
+        "@id": serviceId,
         name: "NDX — інженер повного циклу",
         image: `${SITE.url}/opengraph-image`,
         url: SITE.url,
         description: SERVICES.lead,
-        priceRange: "$$",
         areaServed: [
           { "@type": "Country", name: "Ukraine" },
           { "@type": "City", name: "Kyiv" },
@@ -131,49 +122,6 @@ export function JsonLd() {
             },
           })),
         },
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${SITE.url}/#faq`,
-        mainEntity: FAQ.items.map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.a,
-          },
-        })),
-      },
-      {
-        "@type": "ItemList",
-        name: "Для кого NDX",
-        itemListElement: AUDIENCE.items.map((item, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: item.title,
-          description: item.text,
-        })),
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "NDX",
-            item: SITE.url,
-          },
-        ],
-      },
-      {
-        "@type": "ItemList",
-        name: "Послуги",
-        itemListElement: SERVICE_PAGES.map((item, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: item.shortTitle,
-          url: absoluteUrl(`/poslugy/${item.slug}`),
-        })),
       },
     ],
   };

@@ -31,6 +31,7 @@ export function getSitemapEntries(): SitemapEntry[] {
       priority: 0.75,
       changeFrequency: "monthly" as const,
     })),
+    { path: "/brief", priority: 0.7, changeFrequency: "monthly" },
   ];
 }
 

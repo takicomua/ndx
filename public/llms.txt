@@ -1,10 +1,11 @@
 # NDX · DIACHENKO
-> Full-cycle engineer (Ukraine / Kyiv / remote): sites, landing pages, e-commerce, web systems, project rescue. Brand: NDX. Domain: ndx.com.ua. Tagline: IDEA → LIVE.
+> Full-cycle engineer (Ukraine / Kyiv / remote): sites, landing pages, e-commerce, web systems, project rescue. Brand: NDX. Domain: ndx.com.ua. Tagline: IDEA → LIVE. Person: Микола Дяченко.
 
 ## Primary
 - [Home](https://ndx.com.ua/): Portfolio + brief form
 - [Services](https://ndx.com.ua/poslugy): Service index
 - [Cases / approaches](https://ndx.com.ua/keysy): Typical delivery contours
+- [Brief](https://ndx.com.ua/brief): Request a quote
 
 ## Services
 - [Sites & landings](https://ndx.com.ua/poslugy/sajty-ta-lendingy)
@@ -12,6 +13,12 @@
 - [Web systems & cabinets](https://ndx.com.ua/poslugy/veb-systemy-ta-kabinety)
 - [Project rescue](https://ndx.com.ua/poslugy/poryatunok-proektu)
 
+## Approaches
+- [Landing for ads](https://ndx.com.ua/keysy/lending-pid-reklamu)
+- [Shop MVP](https://ndx.com.ua/keysy/magazyn-mvp)
+- [Cabinet around a process](https://ndx.com.ua/keysy/kabinet-pid-proces)
+- [Stabilize a project](https://ndx.com.ua/keysy/stabilizaciya-proektu)
+
 ## Contact
-- Brief form: https://ndx.com.ua/#brief
+- Brief form: https://ndx.com.ua/brief (also https://ndx.com.ua/#brief)
 - Sitemap: https://ndx.com.ua/sitemap.xml

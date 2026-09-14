@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
+import { Suspense, useState, type FormEvent, type ReactNode } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { trackLeadSubmit } from "@/lib/analytics";
 import { CONTACTS } from "@/lib/constants";
 import { LEAD } from "@/lib/lead";
+import {
+  readTrackingParams,
+  type TrackingValues,
+} from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "loading" | "ok" | "err";
@@ -37,7 +43,41 @@ function Chip({
 }
 
 export function LeadForm() {
-  const [type, setType] = useState<string>(LEAD.types[0].id);
+  return (
+    <Suspense fallback={<LeadFormFields />}>
+      <LeadFormFromQuery />
+    </Suspense>
+  );
+}
+
+function LeadFormFromQuery() {
+  const pathname = usePathname();
+  const search = useSearchParams();
+  const urlType = search.get("type")?.trim();
+  const defaultType =
+    urlType && LEAD.types.some((t) => t.id === urlType)
+      ? urlType
+      : LEAD.types[0].id;
+  const qs = search.toString();
+  return (
+    <LeadFormFields
+      defaultType={defaultType}
+      tracking={readTrackingParams(search)}
+      page={`${pathname}${qs ? `?${qs}` : ""}`}
+    />
+  );
+}
+
+function LeadFormFields({
+  defaultType = LEAD.types[0].id,
+  tracking = {},
+  page = "",
+}: {
+  defaultType?: string;
+  tracking?: TrackingValues;
+  page?: string;
+}) {
+  const [type, setType] = useState<string>(defaultType);
   const [budget, setBudget] = useState<string>(LEAD.budgets[0].id);
   const [timeline, setTimeline] = useState<string>(LEAD.timelines[3].id);
   const [status, setStatus] = useState<Status>("idle");
@@ -57,6 +97,18 @@ export function LeadForm() {
       type,
       budget,
       timeline,
+      page:
+        page ||
+        (typeof window !== "undefined"
+          ? `${window.location.pathname}${window.location.search}`
+          : ""),
+      referrer: typeof document !== "undefined" ? document.referrer : "",
+      tracking:
+        Object.keys(tracking).length > 0
+          ? tracking
+          : typeof window !== "undefined"
+            ? readTrackingParams(new URLSearchParams(window.location.search))
+            : {},
     };
 
     try {
@@ -73,6 +125,7 @@ export function LeadForm() {
         return;
       }
       setStatus("ok");
+      trackLeadSubmit();
       e.currentTarget.reset();
     } catch {
       setStatus("err");

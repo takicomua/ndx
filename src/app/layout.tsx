@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geologica, JetBrains_Mono, Onest } from "next/font/google";
 import { GoogleTags, GtmNoscript } from "@/components/seo/google-tags";
 import { JsonLd } from "@/components/seo/json-ld";
-import { SITE } from "@/lib/constants";
+import { PERSON, SITE } from "@/lib/constants";
 import { SEO } from "@/lib/seo";
 import { shouldNoIndex } from "@/lib/security";
 import "./globals.css";
@@ -51,26 +51,7 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   applicationName: "NDX",
-  keywords: [
-    "NDX",
-    "ndx",
-    "ndx.com.ua",
-    "DIACHENKO",
-    "розробка сайтів",
-    "інженер повного циклу",
-    "full-cycle engineer",
-    "створення сайтів",
-    "інтернет-магазин",
-    "розробка інтернет магазину",
-    "лендінг",
-    "сайт під ключ",
-    "веб-розробка Україна",
-    "розробка сайтів Київ",
-    "IDEA → LIVE",
-    "Next.js",
-    "React",
-  ],
-  authors: [{ name: SITE.brand, url: SITE.url }],
+  authors: [{ name: PERSON.name, url: SITE.url }],
   creator: SITE.brand,
   publisher: "NDX",
   category: "technology",
@@ -124,6 +105,7 @@ export const metadata: Metadata = {
     canonical: SITE.url,
     languages: {
       "uk-UA": SITE.url,
+      "x-default": SITE.url,
     },
   },
   verification: Object.keys(verification).length ? verification : undefined,

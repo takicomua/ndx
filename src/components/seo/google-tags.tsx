@@ -1,12 +1,33 @@
 import Script from "next/script";
-import { hasGoogleAnalytics, hasGtm, SEO } from "@/lib/seo";
+import {
+  gtagBootstrapId,
+  hasGoogleAds,
+  hasGoogleAnalytics,
+  hasGtm,
+  hasMetaPixel,
+  SEO,
+} from "@/lib/seo";
 
-/** Google Tag Manager + GA4 — only inject when IDs are set in env */
+/**
+ * Optional tags — only when env IDs are set.
+ * Organic SEO does not depend on these. Direct gtag is skipped if GTM is present
+ * (configure a GTM trigger on Custom Event `generate_lead` instead).
+ */
 export function GoogleTags() {
   const gtm = hasGtm();
-  const ga = hasGoogleAnalytics();
+  const gtagId = gtagBootstrapId();
+  const meta = hasMetaPixel() && !gtm;
 
-  if (!gtm && !ga) return null;
+  if (!gtm && !gtagId && !meta) return null;
+
+  const gtagConfigs = [
+    hasGoogleAnalytics()
+      ? `gtag('config', '${SEO.gaId}', { anonymize_ip: true });`
+      : "",
+    hasGoogleAds() ? `gtag('config', '${SEO.googleAdsId}');` : "",
+  ]
+    .filter(Boolean)
+    .join("\n            ");
 
   return (
     <>
@@ -20,35 +41,66 @@ export function GoogleTags() {
         `}</Script>
       ) : null}
 
-      {ga && !gtm ? (
+      {gtagId ? (
         <>
           <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${SEO.gaId}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
             strategy="afterInteractive"
           />
-          <Script id="ga4" strategy="afterInteractive">{`
+          <Script id="gtag-init" strategy="afterInteractive">{`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${SEO.gaId}', { anonymize_ip: true });
+            ${gtagConfigs}
           `}</Script>
         </>
+      ) : null}
+
+      {meta ? (
+        <Script id="meta-pixel" strategy="afterInteractive">{`
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+          n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '${SEO.metaPixelId}');
+          fbq('track', 'PageView');
+        `}</Script>
       ) : null}
     </>
   );
 }
 
 export function GtmNoscript() {
-  if (!hasGtm()) return null;
+  const gtm = hasGtm();
+  const meta = hasMetaPixel() && !gtm;
+  if (!gtm && !meta) return null;
+
   return (
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${SEO.gtmId}`}
-        height="0"
-        width="0"
-        style={{ display: "none", visibility: "hidden" }}
-        title="gtm"
-      />
-    </noscript>
+    <>
+      {gtm ? (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${SEO.gtmId}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="gtm"
+          />
+        </noscript>
+      ) : null}
+      {meta ? (
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height={1}
+            width={1}
+            alt=""
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${SEO.metaPixelId}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      ) : null}
+    </>
   );
 }

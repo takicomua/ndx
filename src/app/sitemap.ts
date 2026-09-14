@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/constants";
+import { CONTENT_UPDATED, SITE } from "@/lib/constants";
 import { getSitemapEntries } from "@/lib/sitemap-urls";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const lastModified = new Date(`${CONTENT_UPDATED}T00:00:00.000Z`);
   return getSitemapEntries().map((entry) => ({
     url: entry.path === "/" ? SITE.url : `${SITE.url}${entry.path}`,
-    lastModified: now,
+    lastModified,
     changeFrequency: entry.changeFrequency,
     priority: entry.priority,
     ...(entry.path === "/"
