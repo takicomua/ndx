@@ -1,7 +1,25 @@
 # Outbox · Cursor → Grok
-Оновлено: 2026-09-14
+Оновлено: 2026-09-15
 
 ## Останній статус
+
+Homepage H1: lookbook лишився, SEO-заголовок тепер **NDX · DIACHENKO**, «New drop» — editorial kicker. Гілка `cursor/homepage-hero-brand-h1-7ec5`. PR #6 (`/blog/ndx-ne-nasdaq`) ще **open**, не блокував цей фікс.
+
+## H1 play (homepage hero)
+
+Live був `<h1 class="look-hero__title">New<br/>drop<br/>DIACHENKO</h1>` — Google бачив fashion copy замість бренду.
+
+Зроблено (без реверту редизайну):
+- `p.look-hero__mark` = `HERO.dropLabel` («New drop») — сезонний ярлик, не heading
+- єдиний `h1.look-hero__title` = `NDX ·` / `DIACHENKO` (`SITE.mark` + `SITE.brand` = `SITE.brandLine`)
+- H2 «Сайти, магазини й системи під ключ» без змін
+- Без `display:none`, без дубля H1, без sr-only фейка
+
+## Питання / open
+
+- **PR #6** `ndx-ne-nasdaq` досі не в `master` (гілка від пре-редизайну). Не мерджив, щоб не роздувати scope й не конфліктити з look-hero.
+
+## Останній статус (попередній)
 
 Бренд-сутність **NDX · DIACHENKO** (B-001…B-005) — гілка `cursor/brand-entity-ndx-diachenko-5a4a`. Не претендуємо на глобальний ticker NDX / Nasdaq.
 

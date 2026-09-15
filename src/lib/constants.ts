@@ -63,6 +63,8 @@ export type NavActive =
   | "polityka";
 
 export const HERO = {
+  /** Seasonal/editorial kicker — not the H1. */
+  dropLabel: "New drop",
   role: "Сайти, магазини й системи під ключ",
   pitch:
     "Одна людина веде проєкт від брифу до запуску: структура, код, дані й деплой. На виході — робочий продукт, а не папка з макетами.",

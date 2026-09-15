@@ -35,11 +35,9 @@ export function HomePage() {
       <section className="look-hero">
         <div className="look-hero__visual" aria-hidden />
         <div className="look-hero__badge">
-          <p className="look-hero__mark">{SITE.mark}</p>
+          <p className="look-hero__mark">{HERO.dropLabel}</p>
           <h1 className="look-hero__title">
-            New
-            <br />
-            drop
+            {SITE.mark} ·
             <br />
             {SITE.brand}
           </h1>
