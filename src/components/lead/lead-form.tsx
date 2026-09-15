@@ -83,13 +83,13 @@ function LeadFormFields({ initialType }: { initialType: string }) {
   if (status === "ok") {
     return (
       <div className="flex h-full flex-col justify-center py-2">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]">
+        <p className="font-semibold text-white">
           Готово
         </p>
-        <h3 className="mt-3 font-display text-2xl font-medium text-[var(--fg)]">
+        <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-white">
           {LEAD.successTitle}
         </h3>
-        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[var(--dim)]">
+        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#9a9a9a]">
           {LEAD.successText}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -116,7 +116,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
   return (
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
       <label className="block">
-        <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+        <span className="text-[13px] font-semibold text-[var(--dim)]">
           Тип задачі
         </span>
         <select
@@ -135,7 +135,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block">
-          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          <span className="text-[13px] font-semibold text-[var(--dim)]">
             Ім’я
           </span>
           <input
@@ -149,7 +149,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
           />
         </label>
         <label className="block">
-          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          <span className="text-[13px] font-semibold text-[var(--dim)]">
             Контакт
           </span>
           <input
@@ -165,7 +165,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block">
-          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          <span className="text-[13px] font-semibold text-[var(--dim)]">
             Бюджет
           </span>
           <select
@@ -182,7 +182,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
           </select>
         </label>
         <label className="block">
-          <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+          <span className="text-[13px] font-semibold text-[var(--dim)]">
             Строки
           </span>
           <select
@@ -201,7 +201,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
       </div>
 
       <label className="block">
-        <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--dim)]">
+        <span className="text-[13px] font-semibold text-[var(--dim)]">
           Задача
         </span>
         <textarea
@@ -223,7 +223,7 @@ function LeadFormFields({ initialType }: { initialType: string }) {
       />
 
       {error ? (
-        <p className="text-sm text-[#b42318]" role="alert">
+        <p className="text-sm text-[#ff6b6b]" role="alert">
           {error}{" "}
           <a
             href={CONTACTS.telegram}

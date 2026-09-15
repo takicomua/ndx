@@ -127,14 +127,14 @@ export default async function ServicePage({ params }: Props) {
         </ul>
 
         <h2 className="mt-14 font-display text-2xl font-semibold">Як проходить</h2>
-        <ol className="mt-5 space-y-4">
+        <ol className="book-toc mt-5">
           {page.process.map((step, i) => (
-            <li key={step.t} className="flex gap-3 text-[16px]">
-              <span className="font-semibold text-[var(--accent)]">{i + 1}.</span>
-              <span>
-                <span className="font-semibold text-[var(--fg)]">{step.t}.</span>{" "}
-                <span className="text-[var(--dim)]">{step.d}</span>
-              </span>
+            <li key={step.t}>
+              <span className="book-toc__n">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <p className="book-toc__t">{step.t}</p>
+                <p className="book-toc__d">{step.d}</p>
+              </div>
             </li>
           ))}
         </ol>

@@ -38,44 +38,44 @@ export default async function LeadPage({ searchParams }: Props) {
         ]}
       />
 
-      <div className="mx-auto max-w-3xl py-16 sm:py-20">
-        <h1 className="font-display text-4xl font-semibold tracking-tight">
-          {LEAD.title}
-        </h1>
-        <p className="mt-4 max-w-xl text-[17px] leading-relaxed text-[var(--dim)]">
-          {LEAD.lead}
-        </p>
+      <div className="section-band">
+        <h1>{LEAD.title}</h1>
+      </div>
 
-        <ol className="mt-10 space-y-3 text-[15px] text-[var(--dim)]">
-          {LEAD.steps.map((s) => (
-            <li key={s.n}>
-              <span className="font-semibold text-[var(--fg)]">
-                {s.n}. {s.t}
-              </span>
-              {" — "}
-              {s.d}
-            </li>
-          ))}
-        </ol>
-
-        <ul className="mt-6 space-y-1 text-sm text-[var(--dim)]">
-          {LEAD.trust.map((t) => (
-            <li key={t}>• {t}</li>
-          ))}
-        </ul>
-
-        <div className="lead-panel mt-12">
+      <div className="grid gap-10 px-0 py-6 lg:grid-cols-2 lg:gap-14 lg:py-10">
+        <div>
+          <p className="text-[1rem] leading-relaxed text-[#b3b3b3]">{LEAD.lead}</p>
+          <ol className="book-toc mt-8">
+            {LEAD.steps.map((s) => (
+              <li key={s.n}>
+                <span className="book-toc__n">
+                  {String(s.n).padStart(2, "0")}
+                </span>
+                <div>
+                  <p className="book-toc__t">{s.t}</p>
+                  <p className="book-toc__d">{s.d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <ul className="mt-8 space-y-2 text-[14px] text-[#9a9a9a]">
+            {LEAD.trust.map((t) => (
+              <li key={t}>— {t}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="lead-panel">
           <LeadForm initialType={initialType} />
         </div>
-
-        <p className="mt-8 text-sm text-[var(--dim)]">
-          Або{" "}
-          <Link href="/kontakt" className="text-[var(--accent)] focus-ring">
-            контакти напряму
-          </Link>
-          .
-        </p>
       </div>
+
+      <p className="px-0 pb-10 text-[14px] text-[#9a9a9a]">
+        Або{" "}
+        <Link href="/kontakt" className="text-white underline focus-ring">
+          контакти напряму
+        </Link>
+        .
+      </p>
     </SiteChrome>
   );
 }

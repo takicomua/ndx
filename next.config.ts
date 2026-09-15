@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import { securityHeaders } from "./src/lib/security";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
@@ -31,7 +33,9 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: isProd
+              ? "public, max-age=31536000, immutable"
+              : "no-store, must-revalidate",
           },
         ],
       },

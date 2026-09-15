@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Literata, Source_Sans_3 } from "next/font/google";
+import { Manrope, Unbounded } from "next/font/google";
 import { GoogleTags, GtmNoscript } from "@/components/seo/google-tags";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SITE } from "@/lib/constants";
@@ -7,22 +7,22 @@ import { SEO } from "@/lib/seo";
 import { shouldNoIndex } from "@/lib/security";
 import "./globals.css";
 
-const display = Literata({
+const display = Unbounded({
   variable: "--font-display",
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: ["500", "600", "700"],
 });
 
-const body = Source_Sans_3({
+const body = Manrope({
   variable: "--font-body",
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const mono = IBM_Plex_Mono({
+const mono = Manrope({
   variable: "--font-mono",
   subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["400", "500"],
+  weight: ["500", "600"],
 });
 
 const verification: Metadata["verification"] = {
@@ -147,11 +147,11 @@ export default function RootLayout({
       lang="uk"
       suppressHydrationWarning
       className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
-      style={{ backgroundColor: "#f6f6f4", colorScheme: "light" }}
+      style={{ backgroundColor: "#000000", colorScheme: "dark" }}
     >
       <body
         className="min-h-full bg-[var(--bg)] font-sans text-[var(--fg)]"
-        style={{ backgroundColor: "#f6f6f4", color: "#121212" }}
+        style={{ backgroundColor: "#000000", color: "#f5f5f7" }}
       >
         <GtmNoscript />
         <JsonLd />

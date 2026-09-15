@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
 import { SERVICE_PAGES } from "@/lib/content/services";
 import { buildPageMetadata } from "@/lib/page-meta";
+
+const SERVICE_IMAGES = [
+  "/images/svc-landing.png",
+  "/images/svc-shop.png",
+  "/images/svc-system.png",
+  "/images/svc-repair.png",
+] as const;
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Послуги — сайти, магазини, кабінети",
@@ -26,44 +34,41 @@ export default function ServicesIndexPage() {
         ]}
       />
 
-      <section className="mx-auto max-w-3xl py-16 sm:py-20">
-        <h1 className="font-display text-4xl font-semibold tracking-tight">
-          Послуги
-        </h1>
-        <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
-          Чотири напрями з орієнтирами цін і строків. Оберіть сторінку — там
-          обсяг, процес і відповіді на типові комерційні запити.
-        </p>
+      <div className="section-band !px-0">
+        <h1>Послуги</h1>
+      </div>
 
-        <ul className="list-plain mt-12">
-          {SERVICE_PAGES.map((item) => (
-            <li key={item.slug} className="py-6">
-              <Link href={`/poslugy/${item.slug}`} className="group block focus-ring">
-                <h2 className="font-display text-2xl font-semibold tracking-tight group-hover:text-[var(--accent)]">
-                  {item.shortTitle}
-                </h2>
-                <p className="mt-2 text-[16px] leading-relaxed text-[var(--dim)]">
-                  {item.lead}
-                </p>
-                <p className="mt-2 text-sm text-[var(--fg)]">
-                  {item.pricing.ranges[0]?.price}
-                  <span className="mx-2 text-[var(--dim)]">·</span>
-                  {item.pricing.ranges[0]?.time}
-                </p>
-                <span className="mt-3 inline-block text-sm font-semibold text-[var(--accent)]">
-                  Відкрити →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-10">
-          <Link href="/zayavka" className="btn-primary focus-ring">
-            Залишити заявку
+      <div className="product-grid">
+        {SERVICE_PAGES.map((item, i) => (
+          <Link
+            key={item.slug}
+            href={`/poslugy/${item.slug}`}
+            className="product-card focus-ring"
+          >
+            <div className="product-card__media relative aspect-[4/3] overflow-hidden">
+              <Image
+                src={SERVICE_IMAGES[i] ?? SERVICE_IMAGES[0]}
+                alt=""
+                fill
+                sizes="(max-width:640px) 100vw, 640px"
+                className="object-cover"
+              />
+              <span className="product-card__shade" aria-hidden />
+            </div>
+            <p className="product-card__meta">
+              {item.pricing.ranges[0]?.price} · {item.pricing.ranges[0]?.time}
+            </p>
+            <h2 className="product-card__title">{item.shortTitle}</h2>
+            <p className="product-card__price">{item.lead}</p>
           </Link>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      <div className="px-0 pb-10">
+        <Link href="/zayavka" className="btn-primary focus-ring">
+          Залишити заявку
+        </Link>
+      </div>
     </SiteChrome>
   );
 }

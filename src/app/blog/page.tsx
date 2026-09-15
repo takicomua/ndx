@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SiteChrome } from "@/components/site/chrome";
 import { getPostsSorted } from "@/lib/content/blog";
 import { buildPageMetadata } from "@/lib/page-meta";
+
+const BLOG_IMAGES: Record<string, string> = {
+  "yak-zamovyty-sayt-pid-klyuch": "/images/blog-order.png",
+  "nextjs-chy-wordpress": "/images/blog-next-wp.png",
+  "skilky-koshtuye-internet-magazyn": "/images/blog-shop-cost.png",
+  "skilky-koshtuye-lending-ukrayina": "/images/blog-landing-cost.png",
+};
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Блог — ціни, лендінг під Ads, як замовити сайт",
@@ -28,40 +36,38 @@ export default function BlogIndexPage() {
         ]}
       />
 
-      <section className="mx-auto max-w-3xl py-16 sm:py-20">
-        <h1 className="font-display text-4xl font-semibold tracking-tight">Блог</h1>
-        <p className="mt-4 text-[17px] leading-relaxed text-[var(--dim)]">
-          Практичні відповіді на запити на кшталт «скільки коштує сайт під ключ»
-          і «лендінг під Google Ads» — без обіцянок топ-1 за тиждень.
-        </p>
+      <div className="section-band">
+        <h1>Блог</h1>
+      </div>
+      <p className="about-intro__lead !mb-8 text-center">
+        Практичні відповіді на запити на кшталт «скільки коштує сайт під ключ»
+        і «лендінг під Google Ads» — без обіцянок топ-1 за тиждень.
+      </p>
 
-        <ul className="list-plain mt-12">
-          {posts.map((post) => (
-            <li key={post.slug} className="py-6">
-              <Link href={`/blog/${post.slug}`} className="group block focus-ring">
-                <p className="text-sm text-[var(--dim)]">
-                  {post.date} · {post.readMinutes} хв
-                </p>
-                <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight group-hover:text-[var(--accent)]">
-                  {post.h1}
-                </h2>
-                <p className="mt-2 text-[16px] leading-relaxed text-[var(--dim)]">
-                  {post.lead}
-                </p>
-                <span className="mt-3 inline-block text-sm font-semibold text-[var(--accent)]">
-                  Читати →
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-10">
-          <Link href="/zayavka" className="btn-primary focus-ring">
-            Обговорити задачу
+      <div className="product-grid">
+        {posts.map((post) => (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="product-card focus-ring"
+          >
+            <div className="product-card__media relative aspect-[4/3] overflow-hidden">
+              <Image
+                src={BLOG_IMAGES[post.slug] ?? "/images/blog-order.png"}
+                alt=""
+                fill
+                sizes="(max-width:640px) 100vw, 640px"
+                className="object-cover"
+              />
+              <span className="product-card__shade" aria-hidden />
+              <span className="product-card__badge">{post.readMinutes}′</span>
+            </div>
+            <p className="product-card__meta">{post.date}</p>
+            <h2 className="product-card__title">{post.h1}</h2>
+            <p className="product-card__price">{post.lead}</p>
           </Link>
-        </div>
-      </section>
+        ))}
+      </div>
     </SiteChrome>
   );
 }
