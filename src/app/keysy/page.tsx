@@ -50,7 +50,7 @@ export default function CasesIndexPage() {
                 src={CASE_IMAGES[item.slug] ?? "/images/case-landing.png"}
                 alt=""
                 fill
-                sizes="(max-width:640px) 100vw, 640px"
+                sizes="(max-width:640px) 100vw, (max-width:900px) 90vw, 560px"
                 className="object-cover"
               />
               <span className="product-card__shade" aria-hidden />

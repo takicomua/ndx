@@ -43,3 +43,7 @@ next-env.d.ts
 
 # Grok bridge runtime
 bridge/grok/.watch-state.json
+
+# Local secrets (never commit)
+bridge/*.local.txt
+bridge/**/*.local.txt

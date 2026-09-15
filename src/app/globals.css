@@ -5,7 +5,7 @@
   - space-n = 4/8/16/24/32/48/64
   - measure ~65ch (comfortable line length)
   - heading sits closer to the block it introduces than to the previous section
-  - page gutter is modest; empty sides come from centering the rail
+  - rail widens on desktop so content isn't phone-narrow on large screens
 */
 
 :root {
@@ -43,11 +43,18 @@
 @media (min-width: 768px) {
   :root {
     --page-gutter: var(--space-6);
+    --rail-max: 52rem;
   }
 }
 @media (min-width: 1024px) {
   :root {
     --page-gutter: var(--space-7);
+    --rail-max: 68rem;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --rail-max: 76rem;
   }
 }
 
@@ -305,6 +312,12 @@ body {
   display: grid;
   gap: var(--space-3);
   padding-bottom: var(--space-4);
+}
+@media (min-width: 900px) {
+  .about-faq {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
 }
 .about-actions {
   display: flex;
@@ -814,6 +827,13 @@ body {
   gap: var(--space-7);
   width: 100%;
   padding: 0 0 var(--space-8);
+}
+@media (min-width: 900px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6) var(--space-5);
+  }
 }
 
 .product-grid--lead > :first-child .product-card__media {

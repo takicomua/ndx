@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, type FormEvent } from "react";
+import { Suspense, useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { trackLeadSubmit } from "@/lib/analytics";
 import { CONTACTS } from "@/lib/constants";
@@ -41,13 +41,18 @@ function LeadFormFields({ initialType }: { initialType: string }) {
   const [timeline, setTimeline] = useState<string>(LEAD.timelines[3].id);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const sending = useRef(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending.current) return;
+
+    const form = e.currentTarget;
+    sending.current = true;
     setStatus("loading");
     setError("");
 
-    const fd = new FormData(e.currentTarget);
+    const fd = new FormData(form);
     const payload = {
       name: String(fd.get("name") || ""),
       contact: String(fd.get("contact") || ""),
@@ -64,19 +69,32 @@ function LeadFormFields({ initialType }: { initialType: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json()) as { ok?: boolean; error?: string };
+
+      let data: { ok?: boolean; error?: string } = {};
+      try {
+        data = (await res.json()) as { ok?: boolean; error?: string };
+      } catch {
+        data = {};
+      }
 
       if (!res.ok || !data.ok) {
         setStatus("err");
         setError(data.error || "Не вдалося надіслати. Спробуйте ще раз.");
         return;
       }
-      trackLeadSubmit({ type, budget, timeline });
+
+      form.reset();
       setStatus("ok");
-      e.currentTarget.reset();
+      try {
+        trackLeadSubmit({ type, budget, timeline });
+      } catch {
+        /* lead already delivered */
+      }
     } catch {
       setStatus("err");
       setError("Мережева помилка. Напишіть у Telegram напряму.");
+    } finally {
+      sending.current = false;
     }
   }
 

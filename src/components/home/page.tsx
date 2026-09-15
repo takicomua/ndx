@@ -61,7 +61,7 @@ export function HomePage() {
                 src="/images/cat-services.png"
                 alt=""
                 fill
-                sizes="(max-width:640px) 100vw, 360px"
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 45vw, 560px"
                 className="object-cover"
                 priority
               />
@@ -78,7 +78,7 @@ export function HomePage() {
                 src="/images/cat-works.png"
                 alt=""
                 fill
-                sizes="(max-width:640px) 100vw, 360px"
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 45vw, 560px"
                 className="object-cover"
                 priority
               />
@@ -104,7 +104,7 @@ export function HomePage() {
                   src={SERVICE_IMAGES[i] ?? SERVICE_IMAGES[0]}
                   alt=""
                   fill
-                  sizes="(max-width:640px) 100vw, 640px"
+                  sizes="(max-width:640px) 100vw, (max-width:900px) 90vw, 560px"
                   className="object-cover"
                 />
                 <span className="product-card__shade" aria-hidden />
@@ -116,7 +116,7 @@ export function HomePage() {
           ))}
         </div>
 
-        <div className="philosophy-wrap py-14 text-center sm:py-20">
+        <div className="philosophy-wrap mx-auto max-w-3xl py-14 text-center sm:py-20">
           <p className="text-[1.1rem] leading-relaxed text-[#cfcfcf] sm:text-[1.3rem] sm:leading-[1.65]">
             {HERO.pitch}
           </p>
@@ -141,7 +141,7 @@ export function HomePage() {
                   src={CASE_IMAGES[item.slug] ?? "/images/case-landing.png"}
                   alt=""
                   fill
-                  sizes="(max-width:640px) 100vw, 640px"
+                  sizes="(max-width:640px) 100vw, (max-width:900px) 90vw, 560px"
                   className="object-cover"
                 />
                 <span className="product-card__shade" aria-hidden />
